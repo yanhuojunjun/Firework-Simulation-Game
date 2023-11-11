@@ -106,8 +106,21 @@ void Shader::setVec3(const std::string &name, const glm::vec3 &value) const
 {
     glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(value)); 
 }
-
-void Shader::deleteShader(){
+void Shader::setVec3(const std::string& name, float x, float y, float z) const 
+{
+    glm::vec3 value(x, y, z);
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(value));
+}
+void Shader::setVec4(const std::string& name, const glm::vec4& value) const
+{
+    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(value));
+}
+void Shader::setVec4(const std::string& name, float x, float y, float z, float w) const
+{
+    glm::vec4 value(x, y, z, w);
+    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(value));
+}
+void Shader::deleteShader() {
     glDeleteProgram(ID);
 }
 
