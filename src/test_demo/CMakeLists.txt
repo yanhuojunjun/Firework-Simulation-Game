@@ -19,4 +19,5 @@ else()
     # 以下添加可执行文件
     add_executable(demo_sdl sdl_demo/demo_sdl.cpp)
     add_executable(demo_sdl_2 sdl_demo/demo_sdl_2.cpp)
+    add_executable(firework_0 sdl_demo/firework_0.cpp)
 endif()
