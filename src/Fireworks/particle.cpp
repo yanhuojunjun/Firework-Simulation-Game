@@ -5,15 +5,31 @@ particle::particle(const glm::vec3& pos, const glm::vec3& v, const glm::vec4& co
     velocity = v;
     color = col;
     HP = hp;
+    state = particle_status::P_ALIVE;
 }
 
-bool particle::update(int64_t millisecond_passby) {
+int particle::update(int64_t millisecond_passby) {
+    // 更新生命值
     HP -= millisecond_passby;
-    return HP > 0;
+    switch (state) {
+    case particle_status::P_ALIVE:
+        // 默认自然下坠
+        PathGenerator::gravity(position, velocity, millisecond_passby, -0.5);
+        // 状态转移
+        if (HP <= 0) state = particle_status::P_DEAD;
+        break;
+    case particle_status::P_DYING:
+        // 默认没有亡语
+        break;
+    default:
+        break;
+    }
+    return 0;
 }
 
 bool particle::alive() {
-    return HP > 0;
+    // 只要不是死亡都是存活的
+    return state != particle_status::P_DEAD;
 }
 
 /*********************************************************************************************
@@ -45,7 +61,7 @@ void particle_group::generate(const particle& new_px) {
         }
     }
     // 全部占满后 抢占最早创建的粒子
-    ++last_generate_index;
+    last_generate_index = (last_generate_index + 1) % max_alive_particle_number;
     particles[last_generate_index] = new_px;
     return;
 }
@@ -54,7 +70,6 @@ void particle_group::update(int64_t millisecond_passby) {
     birth_millisecond += millisecond_passby;
     for (auto it = particles.begin();it != particles.end();it++) {
         it->update(millisecond_passby);
-        PathGenerator::gravity(it->position, it->velocity, millisecond_passby, 0.01);
     }
 }
 

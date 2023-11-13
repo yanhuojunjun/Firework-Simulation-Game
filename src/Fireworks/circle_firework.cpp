@@ -66,9 +66,7 @@ void circle_firework::update(int64_t millisecond_passby) {
         boom_flag = false;
     }
     for (auto it = particles.begin();it != particles.end();it++) {
-        if (it->update(millisecond_passby)) {
-            PathGenerator::gravity(it->position, it->velocity, millisecond_passby, -0.5);
-        }
+        it->update(millisecond_passby);
     }
     render();
 }
