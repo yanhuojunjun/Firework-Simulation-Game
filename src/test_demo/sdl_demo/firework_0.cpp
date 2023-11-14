@@ -58,7 +58,8 @@ int main(int argc, char* args[]) {
     }
 
     glEnable(GL_BLEND); // 启用混合 可显示透明背景纹理
-
+    glEnable(GL_PROGRAM_POINT_SIZE);
+    //glPointSize(10.0);
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
     World world;
@@ -71,9 +72,8 @@ int main(int argc, char* args[]) {
         判断是否成功创建 编译
     */
     Shader shader("Shaders/base_world.vs", "Shaders/base_world.fs");
-    Shader firework_shader("Shaders/particle.vs", "Shaders/particle.fs");
     // 创建烟花
-    circle_firework firework1(&firework_shader, &camera, glm::vec3(0.0f, 0.0f, -15.0f), glm::vec4(0.5f, 1.0f, 0.5f, 1.0f), 50);
+    circle_firework firework1(&camera, glm::vec3(0.0f, 0.0f, -10.0f), glm::vec4(0.5f, 1.0f, 0.5f, 1.0f), 50);
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //图元绘制设置为线框模式
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //图元绘制设置为默认(填充)模式
 
