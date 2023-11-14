@@ -73,6 +73,20 @@ void particle_group::update(int64_t millisecond_passby) {
     }
 }
 
+void particle_group::upload(std::vector<glm::vec4>& vbo_buffer, particle_attr attr) {
+    if (attr == particle_attr::P_POSITON) {
+        for (auto px : particles) {
+            vbo_buffer.push_back(glm::vec4(px.position, 0.0f));
+        }
+    }
+    else if (attr == particle_attr::P_COLOR) {
+        for (auto px : particles) {
+            vbo_buffer.push_back(px.color);
+        }
+    }
+
+}
+
 particle_group::~particle_group() {
     particles.clear();
 }

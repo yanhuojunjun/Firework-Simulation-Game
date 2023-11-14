@@ -26,7 +26,7 @@ protected:
     bool boom_flag;
     
     unsigned int texture;
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO, VBO;
 public:
     circle_firework(Shader* shd, ICamera* cam, glm::vec3 pos, glm::vec4 col, uint32_t max_px);
     void update(int64_t millisecond_passby);

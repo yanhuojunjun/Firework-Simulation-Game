@@ -1,6 +1,7 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
+#include "glad.h"
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
@@ -37,6 +38,11 @@ enum particle_status {
     P_STAGE15
 };
 
+enum particle_attr {
+    P_POSITON,
+    P_COLOR
+};
+
 class particle {
 public:
     glm::vec3 position; // 粒子位置
@@ -66,12 +72,16 @@ public:
     void generate(const particle& new_px);
     // 更新粒子位置与颜色
     virtual void update(int64_t millisecond_passby);
+    // 将粒子信息复制到 vbo buffer 中
+    void upload(std::vector<glm::vec4>& vbo_buffer, particle_attr attr);
     virtual ~particle_group();
 protected:
     uint64_t birth_millisecond; // 粒子群产生的时间(暂时忘记有啥用了)
     uint32_t max_alive_particle_number; // 粒子群容纳的最大粒子数量
     uint32_t last_generate_index; // 上一次生成的粒子在列表中的下标
     std::vector<particle> particles; // 粒子列表
+
+
 };
 
 /* *****************************************
