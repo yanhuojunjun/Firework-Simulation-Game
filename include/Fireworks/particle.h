@@ -51,7 +51,7 @@ public:
     int64_t HP; // 粒子剩余存活时间(毫秒)
     particle_status state; // 粒子状态
 public:
-    particle() = default;
+    particle();
     particle(const glm::vec3& pos, const glm::vec3& v, const glm::vec4& col, int64_t hp);
     // 返回是否存活 粒子更新操作
     virtual int update(int64_t millisecond_passby);

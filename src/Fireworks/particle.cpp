@@ -1,5 +1,9 @@
 #include "particle.h"
 
+particle::particle() {
+    state = particle_status::P_DEAD;
+}
+
 particle::particle(const glm::vec3& pos, const glm::vec3& v, const glm::vec4& col, int64_t hp) {
     position = pos;
     velocity = v;
@@ -76,12 +80,12 @@ void particle_group::update(int64_t millisecond_passby) {
 void particle_group::upload(std::vector<glm::vec4>& vbo_buffer, particle_attr attr) {
     if (attr == particle_attr::P_POSITON) {
         for (auto px : particles) {
-            vbo_buffer.push_back(glm::vec4(px.position, 0.0f));
+            if (px.alive()) vbo_buffer.push_back(glm::vec4(px.position, 1.0f));
         }
     }
     else if (attr == particle_attr::P_COLOR) {
         for (auto px : particles) {
-            vbo_buffer.push_back(px.color);
+            if (px.alive()) vbo_buffer.push_back(px.color);
         }
     }
 
