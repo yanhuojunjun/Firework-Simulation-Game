@@ -7,6 +7,6 @@ add_subdirectory(OpenGLTools)
 
 add_subdirectory(Object)
 
-add_subdirectory(Fireworks)
+add_subdirectory(Particles)
 
 add_subdirectory(test_demo)

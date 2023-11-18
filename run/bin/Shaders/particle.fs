@@ -2,12 +2,16 @@
 out vec4 FragColor;
 
 in vec4 ourColor;
-// 纹理坐标
-//in vec2 TexCoords;
 
 uniform sampler2D texture1;
 
 void main()
 {
-    FragColor = texture(texture1, gl_PointCoord) * ourColor;
+    if(ourColor.a > 0.05){
+        FragColor = texture(texture1, gl_PointCoord) * ourColor;
+    }
+    else{
+        discard;
+    }
+    
 }
