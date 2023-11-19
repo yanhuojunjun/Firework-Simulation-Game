@@ -90,6 +90,23 @@ void ParticleEmitter::SetParticleEmitter(
     emitter->SetEmitter(_center, _color, _size, lifetime, _v0, dire, a, delta_time, _texture, _type);
 }
 
+void ParticleEmitter::EnableOneShoot() {
+    one_shoot = true;
+    emitter->emission_delta_time = 0xffffffff;
+    // 删除原有的所有粒子
+    for (int i = 0;i < max_particle_num;i++) {
+        particles[i].lifetime = 0;
+    }
+    // 一次性产生所有粒子
+    for (int i = 0;i < max_particle_num;i++) {
+        Emit();
+    }
+}
+
+void ParticleEmitter::DisableOneShoot() {
+    one_shoot = false;
+}
+
 void ParticleEmitter::EnableColorUpdater(glm::vec4 start, glm::vec4 end) {
     if (!color_points.empty()) color_points.clear();
     enable_color_interpolation = true;
@@ -124,7 +141,7 @@ void ParticleEmitter::Emit() {
 void ParticleEmitter::Update(uint64_t deltatime) {
     // 更新上一次距离发射经过的时间
     emit_time_passby += deltatime;
-    if (emit_time_passby > emitter->emission_delta_time) {
+    if (!one_shoot && emit_time_passby > emitter->emission_delta_time) {
         // 回退发射间隔
         emit_time_passby -= emitter->emission_delta_time;
         // 发射粒子

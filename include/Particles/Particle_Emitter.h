@@ -19,7 +19,8 @@ protected:
     /**********************
     *    粒子更新选项      *
     **********************/
-
+    // 一次性发射所有粒子
+    bool one_shoot;
     // 对颜色进行插值更新
     bool enable_color_interpolation;
     std::vector<color_t_map> color_points;
@@ -55,7 +56,10 @@ public:
         EmitterType _type,
         ...
     );
-    
+
+    void EnableOneShoot();
+    void DisableOneShoot();
+
     void EnableColorUpdater(glm::vec4 start, glm::vec4 end);
     void AddMidColor(glm::vec4 color, float t);
     void DisableColorUpdater();

@@ -75,7 +75,7 @@ int main(int argc, char* args[]) {
     // 创建烟花
     ParticleEmitter emitter;
     emitter.SetParticleEmitter(
-        3000,                                   // 最大粒子数
+        30,                                   // 最大粒子数
         glm::vec3(0, 0, -1),                     // 粒子发射器中心
         glm::vec4(0.5f, 1.0f, 0.5f, 1.0f),      // 粒子颜色
         100,                                     // 粒子大小
@@ -86,12 +86,13 @@ int main(int argc, char* args[]) {
         50,                                     // 粒子发射间隔
         0,                                      // 纹理
         EmitterType::Sphere,                    // 粒子发射器类型
-        0.5f,                                       // 圆形粒子发射器-半径
-        DirectionType::Direct                  // 圆形粒子发射器-朝向类型
+        0.0f,                                       // 圆形粒子发射器-半径
+        DirectionType::Outer                  // 圆形粒子发射器-朝向类型
     );
     emitter.EnableColorUpdater(glm::vec4(0.5f, 0.0f, 0.5f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
     emitter.AddMidColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.7f), 0.7);
     emitter.EnableRandom(0.2);
+    emitter.EnableOneShoot();
     // 创建渲染器
     Emitter_Render emitter_render(&camera);
     emitter_render.AddEmitter(&emitter);
