@@ -11,6 +11,9 @@ target_link_libraries(mesh PUBLIC shader)
 add_library(model STATIC Model.cpp)
 target_link_libraries(model PUBLIC shader mesh libassimp.dll.a)
 
+add_library(firework_viewer STATIC Firework_Viewer.cpp)
+target_link_libraries(firework_viewer PUBLIC icamera)
+
 if(GLFW_LIB_ENABLE)
     add_library(camera_glfw STATIC Camera_GLFW.cpp)
 else()
