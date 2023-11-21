@@ -43,14 +43,42 @@ public:
     *       接口          *
     **********************/
 
+    /**
+     *@brief 发射器需要实现的接口, 给定一个粒子, 按照不同类型发射器进行参数设置
+     * 
+     * @param particle 
+     */
     virtual void EmitParticle(Particle& particle) = 0;
 
     /**********************
     *       成员方法       *
     **********************/
 
+    /**
+     *@brief 设置发射器参数
+     * 
+     * @param _center 粒子发射器中心, 粒子将从该位置附近产生
+     * @param _color 粒子发射器发射的粒子颜色(只用单一颜色时, 可以激活线性插值忽略该变量)
+     * @param _size 粒子的大小
+     * @param lifetime 粒子生命周期, 可以激活随机生命周期, 在该值附近浮动
+     * @param _v0 粒子发射的初速度
+     * @param dire 粒子发射器的朝向
+     * @param a 粒子发射器给予粒子的加速度
+     * @param delta_time 粒子发射器发射粒子的时间间隔
+     * @param _texture 粒子发射器使用的纹理
+     * @param _type 粒子发射器的类型, 已实现直线, 圆, 球
+     */
     void SetEmitter(glm::vec3 _center, glm::vec4 _color, float _size, int64_t lifetime, float _v0, glm::vec3 dire, glm::vec3 a, uint64_t delta_time, unsigned int _texture, EmitterType _type);
+    /**
+     *@brief 激活粒子生命值随机浮动, 浮动误差为生命值的百分比
+     * 
+     * @param _lifetime 粒子生命值浮动百分比, 必须小于1
+     */
     void EnableRandom(float _lifetime);
+    /**
+     *@brief 取消激活粒子生命值浮动
+     * 
+     */
     void DisableRandom();
 public:
     
