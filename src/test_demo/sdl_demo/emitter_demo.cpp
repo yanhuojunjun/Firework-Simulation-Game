@@ -92,7 +92,7 @@ int main(int argc, char* args[]) {
     emitter.EnableColorUpdater(glm::vec4(0.5f, 0.0f, 0.5f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
     emitter.AddMidColor(glm::vec4(1.0f, 1.0f, 1.0f, 0.7f), 0.7);
     emitter.EnableRandom(0.2);
-    emitter.EnableOneShoot();
+    //emitter.EnableOneShoot();
     // 创建渲染器
     Emitter_Render emitter_render(&camera);
     emitter_render.AddEmitter(&emitter);

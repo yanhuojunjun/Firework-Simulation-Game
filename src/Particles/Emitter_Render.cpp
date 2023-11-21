@@ -34,7 +34,7 @@ void Emitter_Render::AddEmitter(ParticleEmitter* new_emitter) {
 }
 
 void Emitter_Render::Update_and_Collect(uint64_t millisecond_passby) {
-    //遍历paticle_groups，更新每个粒子群，若死亡则自动删除，upload粒子群数据
+    //遍历particle_emitters，更新每个粒子群，若死亡则自动删除，upload粒子群数据
     vbo_buffer.clear();
     for (auto it = particle_emitters.begin();it != particle_emitters.end();it++) {
         (*it)->Update(millisecond_passby);
