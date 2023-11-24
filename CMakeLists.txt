@@ -38,6 +38,7 @@ include_directories(${INCLUDE_DIR}/Lib_Include
                     ${INCLUDE_DIR}/Lib_Include/glm
                     ${INCLUDE_DIR}/OpenGLTools
                     ${INCLUDE_DIR}/Object
+                    ${INCLUDE_DIR}/Fireworks
                     ${INCLUDE_DIR}/Particles
                     ${INCLUDE_DIR}/Lib_Include/assimp)
 # 链接库文件

@@ -29,16 +29,22 @@ Emitter_Render::Emitter_Render(ICamera* cam)
     stbi_image_free(data); // 生成纹理后释放图片数据
 }
 
-void Emitter_Render::AddEmitter(ParticleEmitter* new_emitter) {
+void Emitter_Render::AddEmitter(std::shared_ptr<ParticleEmitter> new_emitter) {
     particle_emitters.push_back(new_emitter);
 }
 
 void Emitter_Render::Update_and_Collect(uint64_t millisecond_passby) {
-    //遍历particle_emitters，更新每个粒子群，若死亡则自动删除，upload粒子群数据
+    //遍历paticle_groups，更新每个粒子群，若死亡则自动删除，upload粒子群数据
     vbo_buffer.clear();
-    for (auto it = particle_emitters.begin();it != particle_emitters.end();it++) {
-        (*it)->Update(millisecond_passby);
-        (*it)->Upload(vbo_buffer);
+    for (auto it = particle_emitters.begin();it != particle_emitters.end();) {
+        if ((*it)->Update(millisecond_passby)) {
+            (*it)->Upload(vbo_buffer);
+            ++it;
+        }
+        else {
+            it = particle_emitters.erase(it);
+        }
+
     }
     //std::cout << "render -> vbo_buffer: " << vbo_buffer.size() << std::endl;
 }

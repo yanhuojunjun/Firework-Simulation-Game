@@ -2,3 +2,4 @@ build/*
 !build/make_build.bat
 run/bin/*.exe
 run/lib/*.a
+.vscode

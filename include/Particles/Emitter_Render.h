@@ -16,7 +16,7 @@
 class Emitter_Render {
 public:
     Emitter_Render(ICamera* cam); //创建shader，连接camera，创建VAO VBO，生成纹理
-    void AddEmitter(ParticleEmitter* new_emitter); //增加粒子群
+    void AddEmitter(std::shared_ptr<ParticleEmitter> new_emitter); //增加粒子群
     void Update_and_Collect(uint64_t millisecond_passby); //更新所有粒子的信息，自动删除死亡的粒子群，收集所有粒子的信息
     void Render(); //渲染粒子
     ~Emitter_Render(); //删除shader，vao，vbo
@@ -27,7 +27,7 @@ protected:
     Shader shader;
     ICamera* camera;
     unsigned int texture;
-    std::vector < ParticleEmitter* > particle_emitters; // 需要渲染的所有的粒子群
+    std::vector < std::shared_ptr<ParticleEmitter> > particle_emitters; // 需要渲染的所有的粒子群
 };
 
 
