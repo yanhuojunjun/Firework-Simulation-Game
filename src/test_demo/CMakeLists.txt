@@ -13,7 +13,7 @@ if(GLFW_LIB_ENABLE)
 
 else()
     # 链接库文件
-    link_libraries(mingw32 SDL2main SDL2 camera_sdl world character firework_viewer)
+    link_libraries(mingw32 SDL2main SDL2 SDL2_mixer camera_sdl world character firework_viewer)
     # 链接自定义库
     link_libraries(cube vertex_manager emitter particle_emitter emitter_render firework firework_manager)
     # 以下添加可执行文件
