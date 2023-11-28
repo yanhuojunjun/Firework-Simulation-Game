@@ -4,16 +4,16 @@
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
-
+#include "SkyBox.hpp"
 #include "Shader.h"
 #include "Firework_Viewer.h"
-#include "World.h"
 // 烟花
 #include "Firework_Manager.h"
 
 #include <iostream>
 #include <cmath>
 #include <string>
+
 
 #define WIN_WIDTH 1200
 #define WIN_HEIGHT 750
@@ -63,9 +63,10 @@ int main(int argc, char* args[]) {
     glEnable(GL_PROGRAM_POINT_SIZE);
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
-    World world;
+    
+    
     Firework_Viewer camera;
-    world.Create();
+    skybox sky(&camera);
     /*
         自定义着色器
         判断是否成功创建 编译
@@ -153,7 +154,7 @@ int main(int argc, char* args[]) {
         shader.setMat4("projection", projection);
         shader.setMat4("model", model);
 
-        world.Display();
+        sky.draw();
 
         // 更新帧时间
         now_frame_time = SDL_GetTicks64();

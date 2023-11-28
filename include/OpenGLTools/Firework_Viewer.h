@@ -24,7 +24,7 @@ public:
         摄像机位置 世界上坐标 偏航角 俯仰角(不能超过90度)
         默认初始: 摄像机朝向(0, 0, -1)点,
     */
-    Firework_Viewer(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    Firework_Viewer(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
     /*
         摄像机位置值 世界上坐标值 偏航角 俯仰角(不能超过90度)
     */
