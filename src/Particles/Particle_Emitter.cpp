@@ -224,6 +224,9 @@ void ParticleEmitter::Invalidate() {
 bool ParticleEmitter::isValid() {
     return valid;
 }
+bool ParticleEmitter::isAlive() {
+    return lifetime > 0;
+}
 
 void ParticleEmitter::Emit() {
     // 检查最早使用过的粒子
@@ -325,6 +328,10 @@ uint64_t ParticleEmitter::Upload(std::vector<float>& vbo_buffer) {
 
 glm::vec3 ParticleEmitter::GetEmitterCenter() {
     return emitter->emitter_center;
+}
+
+glm::vec3 ParticleEmitter::GetEmitterColor() {
+    return emitter->particle_color;
 }
 
 ParticleEmitter::~ParticleEmitter() {

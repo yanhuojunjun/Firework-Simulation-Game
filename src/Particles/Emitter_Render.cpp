@@ -1,10 +1,10 @@
 #include "Emitter_Render.h"
 
-Emitter_Render::Emitter_Render(ICamera* cam) 
-    :shader("Shaders/particle.vs", "Shaders/particle.fs"){
+Emitter_Render::Emitter_Render(ICamera* cam)
+    :shader("Shaders/particle.vs", "Shaders/particle.fs") {
 
     camera = cam;
-    
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -30,14 +30,31 @@ Emitter_Render::Emitter_Render(ICamera* cam)
 }
 
 void Emitter_Render::AddEmitter(std::shared_ptr<ParticleEmitter> new_emitter) {
+    emitter_vector_mtx.lock();
     particle_emitters.push_back(new_emitter);
+    emitter_vector_mtx.unlock();
+}
+
+void Emitter_Render::AddPointLight(glm::vec3 _pos, glm::vec3 _col) {
+    light_point_mxt.lock();
+    light_points_buffer.push_back(_pos.x);
+    light_points_buffer.push_back(_pos.y);
+    light_points_buffer.push_back(_pos.z);
+    light_points_buffer.push_back(_col.r);
+    light_points_buffer.push_back(_col.g);
+    light_points_buffer.push_back(_col.b);
+    light_point_mxt.unlock();
+}
+
+const std::vector<float>& Emitter_Render::GetPointLight() {
+    return light_points_buffer;
 }
 
 void Emitter_Render::Update_and_Collect(uint64_t millisecond_passby) {
     //遍历paticle_groups，更新每个粒子群，若死亡则自动删除，upload粒子群数据
     vbo_buffer.clear();
     for (auto it = particle_emitters.begin();it != particle_emitters.end();) {
-        if ((*it)->Update(millisecond_passby)) {
+        if ((*it)->isValid()) {
             (*it)->Upload(vbo_buffer);
             ++it;
         }
@@ -60,8 +77,8 @@ void Emitter_Render::Render() {
     shader.setMat4("projection", glm::perspective(glm::radians(camera->Zoom), 800.0f / 600.0f, 0.1f, 100.0f));
     shader.setVec3("camera_pos", camera->Position);
     shader.setInt("texture1", 0);
-    glDrawArrays(GL_POINTS, 0, vbo_buffer.size()/8);//绘制VBO中的所有点
-    
+    glDrawArrays(GL_POINTS, 0, vbo_buffer.size() / 8);//绘制VBO中的所有点
+
     glDepthMask(GL_TRUE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }

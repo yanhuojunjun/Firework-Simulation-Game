@@ -175,6 +175,8 @@ public:
     void Invalidate();
     // 返回粒子发射器是否有效
     bool isValid();
+    // 返回粒子发射器生命值是否大于 0 
+    bool isAlive();
     // 发射一个粒子
     void Emit();
 
@@ -197,7 +199,9 @@ public:
 
     // 返回粒子发射器的中心
     glm::vec3 GetEmitterCenter();
-
+    // 返回粒子发射器的颜色
+    glm::vec3 GetEmitterColor();
+    
     ~ParticleEmitter();
 };
 

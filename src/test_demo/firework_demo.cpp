@@ -10,7 +10,7 @@
 #include "SkyBox.hpp"
 #include "Shader.h"
 // 烟花
-#include "Firework_Manager.h"
+#include "Pipe_Firework_Manager.h"
 
 unsigned int WIN_WIDTH = 1200;
 unsigned int WIN_HEIGHT = 750;
@@ -103,8 +103,16 @@ int main(int argc, char* args[]) {
     skybox sky(&camera);
     // 创建渲染器
     std::shared_ptr<Emitter_Render> emitter_render = std::make_shared<Emitter_Render>(&camera);
+#ifdef SDL2_LIB
+    // 音频播放器
+    std::shared_ptr<Sound_Player> sound_player = std::make_shared<Sound_Player>();
     // 创建烟花
-    Firework_Manager fw_manager(emitter_render);
+    Pipe_Firework_Manager fw_manager(emitter_render, sound_player);
+#else
+    // 创建烟花
+    Pipe_Firework_Manager fw_manager(emitter_render);
+#endif
+
 
     // 开启Z缓冲
     glEnable(GL_DEPTH_TEST);
@@ -125,7 +133,7 @@ int main(int argc, char* args[]) {
             camera.ProcessEvent(event);
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
-                case SDLK_4:
+                case SDLK_0:
                     fw_manager.Register_Firework(
                         0,
                         8,
@@ -145,26 +153,26 @@ int main(int argc, char* args[]) {
                         3000 + glm::linearRand(0, 1) * 500
                     );
                     break;
-                case SDLK_2:
-                    fw_manager.Register_Firework(
-                        2,
-                        8,
-                        camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                        glm::vec3(1, 2, 0),
-                        glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                        3000 + glm::linearRand(0, 1) * 500
-                    );
-                    break;
-                case SDLK_3:
-                    fw_manager.Register_Firework(
-                        3,
-                        8,
-                        camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                        glm::vec3(0, 1, 0),
-                        glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                        3000 + glm::linearRand(0, 1) * 500
-                    );
-                    break;
+                    // case SDLK_2:
+                    //     fw_manager.Register_Firework(
+                    //         2,
+                    //         8,
+                    //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+                    //         glm::vec3(1, 2, 0),
+                    //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+                    //         3000 + glm::linearRand(0, 1) * 500
+                    //     );
+                    //     break;
+                    // case SDLK_3:
+                    //     fw_manager.Register_Firework(
+                    //         3,
+                    //         8,
+                    //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+                    //         glm::vec3(0, 1, 0),
+                    //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+                    //         3000 + glm::linearRand(0, 1) * 500
+                    //     );
+                    //     break;
                 }
             }
         }
@@ -184,25 +192,25 @@ int main(int argc, char* args[]) {
                 glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
                 3000 + glm::linearRand(0, 1) * 500
             );
-        if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
-            fw_manager.Register_Firework(
-                2,
-                8,
-                camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                glm::vec3(1, 2, 0),
-                glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                3000 + glm::linearRand(0, 1) * 500
-            );
-        if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
-            fw_manager.Register_Firework(
-                3,
-                8,
-                camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                glm::vec3(0, 1, 0),
-                glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                3000 + glm::linearRand(0, 1) * 500
-            );
-        if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+        // if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+        //     fw_manager.Register_Firework(
+        //         2,
+        //         8,
+        //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+        //         glm::vec3(1, 2, 0),
+        //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+        //         3000 + glm::linearRand(0, 1) * 500
+        //     );
+        // if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+        //     fw_manager.Register_Firework(
+        //         3,
+        //         8,
+        //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+        //         glm::vec3(0, 1, 0),
+        //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+        //         3000 + glm::linearRand(0, 1) * 500
+        //     );
+        if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
             fw_manager.Register_Firework(
                 0,
                 8,

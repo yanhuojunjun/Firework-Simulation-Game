@@ -9,6 +9,8 @@ add_subdirectory(Object)
 
 add_subdirectory(Particles)
 
+add_subdirectory(Sound)
+
 add_subdirectory(Fireworks)
 
 add_subdirectory(test_demo)

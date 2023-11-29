@@ -1,7 +1,11 @@
-add_library(firework OBJECT Firework.cpp)
+add_library(firework_pipeline OBJECT Firework_Pipeline.cpp)
 
-target_link_libraries(firework PUBLIC emitter particle_emitter emitter_render shader icamera)
+add_library(pipe_firework_manager OBJECT Pipe_Firework_Manager.cpp)
 
-add_library(firework_manager OBJECT Firework_Manager.cpp)
+target_link_libraries(pipe_firework_manager PUBLIC firework_pipeline OpenMP::OpenMP_CXX)
 
-target_link_libraries(firework_manager PUBLIC firework emitter particle_emitter emitter_render shader icamera)
+# add_library(firework OBJECT Firework.cpp)
+
+# add_library(firework_manager OBJECT Firework_Manager.cpp)
+
+# target_link_libraries(firework_manager PUBLIC firework)
