@@ -12,6 +12,9 @@
 #include <vector>
 #include <string>
 
+extern unsigned int WIN_WIDTH;
+extern unsigned int WIN_HEIGHT;
+
 std::vector<std::string> faces //这里进行图片的修改
 {
       "img/right.bmp",
@@ -105,7 +108,7 @@ public:
         shader.use();
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = camera->GetViewMatrix();
-        glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)1200 / (float)750, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 100.0f);
         shader.setMat4("model", model);
         shader.setMat4("view", view);
         shader.setMat4("projection", projection);

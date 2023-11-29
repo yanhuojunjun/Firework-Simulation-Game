@@ -14,7 +14,7 @@
 
 unsigned int WIN_WIDTH = 1200;
 unsigned int WIN_HEIGHT = 750;
-unsigned int FPS = 62;
+const float FPS = 62.0f;
 
 #ifdef SDL2_LIB
 #include "SDL.h"
@@ -37,12 +37,25 @@ int main(int argc, char* args[]) {
     if (SDL_Init(SDL_INIT_EVERYTHING)) {
         return 1;
     }
-    // SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    // SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-    // SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    // SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    // SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    // SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+    // 初始化 Mixer 可以读取 MP3 格式文件
+    if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "error: %s\n", Mix_GetError());
+        SDL_Quit();
+        return -1;
+    }
+    // 打开 Audio
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_CHANNELS, 4096) != 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "error: %s\n", Mix_GetError());
+        Mix_Quit();
+        SDL_Quit();
+        return -1;
+    }
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -63,8 +76,8 @@ int main(int argc, char* args[]) {
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     SDL_GLContext gl_context = SDL_GL_CreateContext(win);
-    // SDL_GL_MakeCurrent(win, gl_context);
-    // SDL_GL_SetSwapInterval(1);
+    SDL_GL_MakeCurrent(win, gl_context);
+    SDL_GL_SetSwapInterval(0);
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
@@ -121,7 +134,7 @@ int main(int argc, char* args[]) {
 #ifdef SDL2_LIB
     SDL_Event event;
     bool quit_flag = false;
-    uint64_t last_frame_time = SDL_GetTicks64();;
+    uint64_t last_frame_time = SDL_GetTicks64();
     uint64_t now_frame_time = last_frame_time;
     uint64_t delta_frame_time = now_frame_time - last_frame_time;
     float frame_rate = 0.0f;
@@ -256,7 +269,7 @@ int main(int argc, char* args[]) {
         // 控制帧率
         frame_rate = 1000.0f / static_cast<float>(delta_frame_time);
         if (frame_rate > FPS) {
-            SDL_Delay(1000.0 / FPS - delta_frame_time);
+            SDL_Delay(static_cast<uint32_t>(1000.0 / FPS - static_cast<float>(delta_frame_time)));
         }
         // 标题栏显示帧率
         if (last_flush_time + 1000 < now_frame_time) {
@@ -264,7 +277,6 @@ int main(int argc, char* args[]) {
             SDL_SetWindowTitle(win, win_title.data());
             last_flush_time = now_frame_time;
         }
-
         // 交换缓冲
         SDL_GL_SwapWindow(win);
         camera.FlushFrameTime();
@@ -294,6 +306,9 @@ int main(int argc, char* args[]) {
     ***************************************************/
 #ifdef SDL2_LIB
     SDL_DestroyWindow(win);
+    // 关闭音频相关库
+    Mix_CloseAudio();
+    Mix_Quit();
     //退出SDL 
     SDL_Quit();
 #else
