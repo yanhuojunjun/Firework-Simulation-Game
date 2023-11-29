@@ -20,7 +20,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${RUN_DIR}/lib)
 
 # 设置选项
 # 第二个参数 如果为 ON 则使用GLFW库作为窗口及控制库 为 OFF 则使用SDL2库 
-set(GLFW_LIB_ENABLE ON CACHE BOOL "whether use glfw or sdl2" FORCE)
+set(GLFW_LIB_ENABLE OFF CACHE BOOL "whether use glfw or sdl2" FORCE)
 
 if(GLFW_LIB_ENABLE)
     message(STATUS "using glfw")

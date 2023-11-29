@@ -11,12 +11,13 @@ target_link_libraries(mesh PUBLIC shader)
 add_library(model STATIC Model.cpp)
 target_link_libraries(model PUBLIC shader mesh assimp)
 
-add_library(firework_viewer STATIC Firework_Viewer.cpp)
-target_link_libraries(firework_viewer PUBLIC icamera)
-
 if(GLFW_LIB_ENABLE)
     add_library(camera_glfw STATIC Camera_GLFW.cpp)
 else()
     add_library(camera_sdl STATIC Camera_SDL.cpp)
     target_link_libraries(camera_sdl PUBLIC mingw32 SDL2main SDL2)
+
+    add_library(firework_viewer STATIC Firework_Viewer.cpp)
+    target_link_libraries(firework_viewer PUBLIC mingw32 SDL2main SDL2 icamera)
+
 endif()

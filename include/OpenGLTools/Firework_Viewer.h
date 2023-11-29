@@ -9,9 +9,6 @@
 class Firework_Viewer :public ICamera
 {
 protected:
-
-
-    
     // 控制移动距离
     Uint64 Last_Frame_time;
     Uint64 Time_Pass_By;
