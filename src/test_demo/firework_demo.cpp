@@ -9,6 +9,7 @@
 #include "gtc/type_ptr.hpp"
 #include "SkyBox.hpp"
 #include "Shader.h"
+#include "bloom.h"
 // 烟花
 #include "Pipe_Firework_Manager.h"
 
@@ -114,6 +115,8 @@ int main(int argc, char* args[]) {
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
     // 天空盒
     skybox sky(&camera);
+    //bloom
+    bloom bloom_worker(true, 0.3f, WIN_WIDTH, WIN_HEIGHT);//创建-------------------------
     // 创建渲染器
     std::shared_ptr<Emitter_Render> emitter_render = std::make_shared<Emitter_Render>(&camera);
 #ifdef SDL2_LIB
@@ -259,8 +262,16 @@ int main(int argc, char* args[]) {
         /***************************************************
          *                    渲染                         *
         ***************************************************/
+        bloom_worker.draw_world();//画世界------------------------------
         sky.draw();
         emitter_render->Render();
+
+        bloom_worker.draw_firework();//画烟花-------------------------------
+        emitter_render->Render();
+
+        bloom_worker.draw_gauss(); //gauss 模糊--------------------------------------
+
+        bloom_worker.draw_screen();//画屏幕-------------------------------
 
         /***************************************************
          *                    帧率控制                     *

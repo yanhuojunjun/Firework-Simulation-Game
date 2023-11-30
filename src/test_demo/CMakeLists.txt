@@ -4,7 +4,7 @@ link_libraries(glad stb_image)
 link_libraries(shader model icamera)
 
 # 链接自定义库
-link_libraries(emitter particle_emitter emitter_render firework_pipeline pipe_firework_manager)
+link_libraries(emitter particle_emitter emitter_render firework_pipeline pipe_firework_manager bloom)
 
 if(GLFW_LIB_ENABLE)
     # 链接库文件
