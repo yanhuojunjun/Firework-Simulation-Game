@@ -75,6 +75,7 @@ void Emitter_Render::Render() {
 
     glBindVertexArray(VAO);
     glBufferData(GL_ARRAY_BUFFER, vbo_buffer.size() * sizeof(float), vbo_buffer.data(), GL_DYNAMIC_DRAW);//动态更新VBO，会自动改变大小
+    glBindTexture(GL_TEXTURE_2D, texture);// 绑定纹理 **必需**
     shader.use();
     shader.setMat4("view", camera->GetViewMatrix());
     shader.setMat4("projection", glm::perspective(glm::radians(camera->Zoom), 800.0f / 600.0f, 0.1f, 100.0f));
