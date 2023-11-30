@@ -33,7 +33,6 @@ int32_t Pipe_Firework_Manager::Register_Firework(
         init_color,
         b_time
     ));
-    return 0;
 }
 
 void Pipe_Firework_Manager::Update(uint64_t deltatime) {

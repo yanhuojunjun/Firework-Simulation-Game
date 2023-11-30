@@ -45,7 +45,8 @@ Pipe_Firework::Pipe_Firework(
     first_node.particle_emitter->EnableColorUpdater(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
     first_node.particle_emitter->EnableLifetimeTolerance(0.2);
 
-    switch (type) {
+    switch (type)
+    {
     case 0:
         first_node.Create_Next = pipe0_0;
         break;
@@ -66,7 +67,9 @@ bool Pipe_Firework::Update(uint64_t delta_ms) {
             if (!it->particle_emitter->isAlive() && !it->created_next) {
                 it->created_next = true;
                 if (it->Create_Next(nodes, emitter_render, (*it))) { // 需要产生光源
-
+                    boom_lighting = true;
+                    light_pos = it->particle_emitter->GetEmitterCenter();
+                    light_col = it->particle_emitter->GetEmitterColor();
                 }
             }
             ++it;
@@ -100,7 +103,7 @@ bool pipe_end(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_
  *                      烟花 0                                         *
 ***********************************************************************/
 
-bool pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+void pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     for (int i = 0;i < 10;i++) {
         new_node.created_next = false;
@@ -132,13 +135,10 @@ bool pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         nodes.push_front(new_node);
         // 添加到渲染器
         render->AddEmitter(new_node.particle_emitter);
-        // 添加光源
-        render->AddPointLight(father.particle_emitter->GetEmitterColor(), father.particle_emitter->GetEmitterCenter());
     }
-    return true;
 }
 
-bool pipe0_1(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+void pipe0_1(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     new_node.created_next = false;
     // 设置粒子发射器
@@ -176,7 +176,7 @@ bool pipe0_1(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
     return true;
 }
 
-bool pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+void pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     for (int i = 0;i < 3;i++) {
         new_node.created_next = false;
@@ -217,7 +217,7 @@ bool pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
  *                      烟花 1                                         *
 ***********************************************************************/
 
-bool pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+void pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     for (int i = 0;i < 10;i++) {
         new_node.created_next = false;
@@ -253,8 +253,5 @@ bool pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         nodes.push_front(new_node);
         // 添加到渲染器
         render->AddEmitter(new_node.particle_emitter);
-        // 添加光源
-        render->AddPointLight(father.particle_emitter->GetEmitterColor(), father.particle_emitter->GetEmitterCenter());
     }
-    return true;
 }
