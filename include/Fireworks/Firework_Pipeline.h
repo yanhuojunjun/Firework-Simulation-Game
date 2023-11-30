@@ -15,7 +15,7 @@
 struct Firework_Pipeline_Node;
 // 定义节点后继函数
 // 创建粒子发射器并添加到渲染器
-typedef std::function<void(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&)> PipelineFunction;
+typedef std::function<bool(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&)> PipelineFunction;
 
 // 烟花流水线节点
 struct Firework_Pipeline_Node {
@@ -64,14 +64,17 @@ protected:
     // 音效播放器
     std::shared_ptr<Sound_Player> sound_player;
 #endif
+    // 爆炸光源
+    bool boom_lighting;
+    glm::vec3 light_pos, light_col;
 };
 
-void pipe_end(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
+bool pipe_end(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 
-void pipe0_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
-void pipe0_1(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
-void pipe0_2(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
+bool pipe0_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
+bool pipe0_1(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
+bool pipe0_2(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 
-void pipe1_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
+bool pipe1_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 
 #endif

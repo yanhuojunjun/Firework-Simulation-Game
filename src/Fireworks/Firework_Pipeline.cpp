@@ -59,6 +59,10 @@ Pipe_Firework::Pipe_Firework(
 
     nodes.push_front(first_node);
     render->AddEmitter(first_node.particle_emitter);
+    // 光源
+    boom_lighting = false;
+    light_pos = glm::vec3(0.0f);
+    light_col = glm::vec3(0.0f);
 }
 
 bool Pipe_Firework::Update(uint64_t delta_ms) {
@@ -76,7 +80,11 @@ bool Pipe_Firework::Update(uint64_t delta_ms) {
         }
         else {
             it = nodes.erase(it);
+            boom_lighting = false;
         }
+    }
+    if (boom_lighting) {    // 将光源信息传递给 render
+        emitter_render->AddPointLight(light_pos, light_col);
     }
     return !nodes.empty();
 }
@@ -103,7 +111,7 @@ bool pipe_end(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_
  *                      烟花 0                                         *
 ***********************************************************************/
 
-void pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+bool pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     for (int i = 0;i < 10;i++) {
         new_node.created_next = false;
@@ -136,9 +144,10 @@ void pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         // 添加到渲染器
         render->AddEmitter(new_node.particle_emitter);
     }
+    return true;
 }
 
-void pipe0_1(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+bool pipe0_1(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     new_node.created_next = false;
     // 设置粒子发射器
@@ -173,10 +182,10 @@ void pipe0_1(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
     nodes.push_front(new_node);
     // 添加到渲染器
     render->AddEmitter(new_node.particle_emitter);
-    return true;
+    return false;
 }
 
-void pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+bool pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     for (int i = 0;i < 3;i++) {
         new_node.created_next = false;
@@ -209,7 +218,7 @@ void pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         // 添加到渲染器
         render->AddEmitter(new_node.particle_emitter);
     }
-    return true;
+    return false;
 }
 
 
@@ -217,7 +226,7 @@ void pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
  *                      烟花 1                                         *
 ***********************************************************************/
 
-void pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
+bool pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
     for (int i = 0;i < 10;i++) {
         new_node.created_next = false;
@@ -254,4 +263,5 @@ void pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         // 添加到渲染器
         render->AddEmitter(new_node.particle_emitter);
     }
+    return true;
 }
