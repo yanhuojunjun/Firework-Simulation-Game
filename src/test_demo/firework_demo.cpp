@@ -8,6 +8,7 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include "SkyBox.hpp"
+#include "Background.hpp"
 #include "Shader.h"
 #include "bloom.h"
 // 烟花
@@ -115,6 +116,8 @@ int main(int argc, char* args[]) {
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
     // 天空盒
     skybox sky(&camera);
+    // 地面
+    Background background(50, 50, -1.0f, &camera);
     //bloom
     bloom bloom_worker(true, 0.3f, WIN_WIDTH, WIN_HEIGHT);//创建-------------------------
     // 创建渲染器
@@ -264,6 +267,7 @@ int main(int argc, char* args[]) {
         ***************************************************/
         bloom_worker.draw_world();//画世界------------------------------
         sky.draw();
+        background.draw();
         emitter_render->Render();
 
         bloom_worker.draw_firework();//画烟花-------------------------------

@@ -52,8 +52,8 @@ void Camera_GLFW::ProcessKeyboard() {
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) Position -= Front * velocity;
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) Position -= Right * velocity;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) Position += Right * velocity;
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) Position += glm::vec3(0.0f, 1.0f, 0.0f);
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) Position += glm::vec3(0.0f, -1.0f, 0.0f);
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) Position += glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) Position += glm::vec3(0.0f, -1.0f, 0.0f) * velocity;
 }
 
 void Camera_GLFW::ProcessMouseMovement(double _xpos, double _ypos) {
