@@ -34,6 +34,24 @@ void Emitter_Render::AddEmitter(std::shared_ptr<ParticleEmitter> new_emitter) {
     particle_emitters.push_back(new_emitter);
     emitter_vector_mtx.unlock();
 }
+void Emitter_Render::AddPointLight(glm::vec3 _pos, glm::vec3 _col) {
+    light_point_mxt.lock();
+    light_points_buffer.push_back(_pos.x);
+    light_points_buffer.push_back(_pos.y);
+    light_points_buffer.push_back(_pos.z);
+    light_points_buffer.push_back(_col.r);
+    light_points_buffer.push_back(_col.g);
+    light_points_buffer.push_back(_col.b);
+    light_point_mxt.unlock();
+}
+
+const std::vector<float>& Emitter_Render::GetPointLight() {
+    return light_points_buffer;
+}
+
+void Emitter_Render::ClearPointLight() {
+    light_points_buffer.clear();
+}
 
 void Emitter_Render::Update_and_Collect(uint64_t millisecond_passby) {
     //遍历paticle_groups，更新每个粒子群，若死亡则自动删除，upload粒子群数据
@@ -66,6 +84,7 @@ void Emitter_Render::Render() {
 
     glDepthMask(GL_TRUE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //if(light_points_buffer.size() !=0) std::cout << light_points_buffer.size() << " ";
 }
 Emitter_Render::~Emitter_Render() {
     glDeleteVertexArrays(1, &VAO);

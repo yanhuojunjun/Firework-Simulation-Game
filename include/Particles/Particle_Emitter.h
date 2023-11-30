@@ -199,7 +199,8 @@ public:
 
     // 返回粒子发射器的中心
     glm::vec3 GetEmitterCenter();
-
+    // 返回粒子发射器的颜色
+    glm::vec3 GetEmitterColor();
     ~ParticleEmitter();
 };
 

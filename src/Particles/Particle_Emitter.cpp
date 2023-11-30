@@ -330,6 +330,10 @@ glm::vec3 ParticleEmitter::GetEmitterCenter() {
     return emitter->emitter_center;
 }
 
+glm::vec3 ParticleEmitter::GetEmitterColor() {
+    return emitter->particle_color;
+}
+
 ParticleEmitter::~ParticleEmitter() {
     particles.clear();
 }

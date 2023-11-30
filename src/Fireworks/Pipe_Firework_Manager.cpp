@@ -36,6 +36,7 @@ int32_t Pipe_Firework_Manager::Register_Firework(
 }
 
 void Pipe_Firework_Manager::Update(uint64_t deltatime) {
+    render->ClearPointLight();
 #pragma omp parallel for
     for (int i = 0;i < fireworks.size();i++) {
         fireworks[i]->Update(deltatime);

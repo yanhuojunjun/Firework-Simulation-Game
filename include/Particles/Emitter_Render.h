@@ -19,6 +19,9 @@ class Emitter_Render {
 public:
     Emitter_Render(ICamera* cam); //创建shader，连接camera，创建VAO VBO，生成纹理
     void AddEmitter(std::shared_ptr<ParticleEmitter> new_emitter); //增加粒子群
+    void AddPointLight(glm::vec3 _pos, glm::vec3 _col); // 添加点光源
+    const std::vector<float>& GetPointLight(); // 返回点光源
+    void ClearPointLight(); // 清空点光源
     void Update_and_Collect(uint64_t millisecond_passby); //更新所有粒子的信息，自动删除死亡的粒子群，收集所有粒子的信息
     void Render(); //渲染粒子
     ~Emitter_Render(); //删除shader，vao，vbo
@@ -31,6 +34,8 @@ protected:
     unsigned int texture;
     std::mutex emitter_vector_mtx; // 维护 particle_emitters 的唯一访问
     std::vector < std::shared_ptr<ParticleEmitter> > particle_emitters; // 需要渲染的所有的粒子群
+    std::mutex light_point_mxt; // 维护 light_points 的唯一访问
+    std::vector<float> light_points_buffer; // 所有烟花的点光源
 };
 
 
