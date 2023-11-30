@@ -6,6 +6,7 @@ Firework_Viewer::Firework_Viewer(glm::vec3 position, glm::vec3 up, float yaw, fl
     Last_Frame_time = SDL_GetTicks64();
     Time_Pass_By = 0;
     is_view_mode = true;
+    jumping = false;
 }
 
 Firework_Viewer::Firework_Viewer(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) {
@@ -14,6 +15,7 @@ Firework_Viewer::Firework_Viewer(float posX, float posY, float posZ, float upX, 
     Last_Frame_time = SDL_GetTicks64();
     Time_Pass_By = 0;
     is_view_mode = true;
+    jumping = false;
 }
 
 Firework_Viewer::~Firework_Viewer() {}
@@ -23,47 +25,72 @@ void Firework_Viewer::FlushFrameTime() {
     Last_Frame_time += Time_Pass_By;
 
     // 计算这一帧的位移
-    glm::vec3 velocity(MovementSpeed * Time_Pass_By / 1000);
+    float velocity(MovementSpeed * Time_Pass_By / 1000);
 
-    for (int i = 0;i < 6;i++) {
+    for (int i = 0;i < 4;i++) {
         Position += velocity * direct[i];
     }
+    // 跳跃 下落
+    if (is_view_mode) {
+        if (jumping) {
+            direct[4].y -= velocity * 2.0; // 重力加速度为0.01
+            Position.y += velocity * direct[4].y;
+        }
+    }
+    else {  // 飞行
+        Position += velocity * direct[4];
+        Position += velocity * direct[5];
+    }
+    // 地面检测
+    if (Position.y < 0.0f) {
+        Position.y = 0.0f;
+        jumping = false;
+    }
+
 }
 
 void Firework_Viewer::ProcessKeyboardDown(SDL_Event& event) {
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_W: {
+    switch (event.key.keysym.sym) {
+    case SDLK_w: {
         direct[0] = glm::normalize(glm::vec3(Front.x, 0, Front.z));
         break;
     }
-    case SDL_SCANCODE_S: {
+    case SDLK_s: {
         direct[1] = -glm::normalize(glm::vec3(Front.x, 0, Front.z));
         break;
     }
-    case SDL_SCANCODE_D: {
+    case SDLK_d: {
         direct[2] = glm::normalize(glm::vec3(Right.x, 0, Right.z));
         break;
     }
-    case SDL_SCANCODE_A: {
+    case SDLK_a: {
         direct[3] = -glm::normalize(glm::vec3(Right.x, 0, Right.z));
         break;
     }
-    case SDL_SCANCODE_SPACE: {
-        direct[4] = glm::vec3(0, 1, 0);
+    case SDLK_SPACE: {
+        if (is_view_mode) {
+            if (!jumping) {
+                direct[4] = glm::vec3(0, 2.0, 0); // 跳跃初速度
+                jumping = true;
+            }
+        }
+        else {
+            direct[4] = glm::vec3(0, 1, 0);
+        }
         break;
     }
-    case SDL_SCANCODE_LSHIFT: {
+    case SDLK_LSHIFT: {
         direct[5] = glm::vec3(0, -1, 0);
         break;
     }
-    case SDL_SCANCODE_ESCAPE: {
+    case SDLK_ESCAPE: {
         SDL_Event event;
         event.type = SDL_QUIT;
         SDL_PushEvent(&event);
         break;
     }
-    case SDL_SCANCODE_TAB: {
-        is_view_mode = !is_view_mode;
+    case SDLK_f: {
+        is_view_mode = false;
         break;
     }
     default: {
@@ -73,32 +100,32 @@ void Firework_Viewer::ProcessKeyboardDown(SDL_Event& event) {
 }
 
 void Firework_Viewer::ProcessKeyboardUp(SDL_Event& event) {
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_W: {
+    switch (event.key.keysym.sym) {
+    case SDLK_w: {
         direct[0] = glm::vec3(0.0f);
         //std::cout << "go left" << std::endl;
         break;
     }
-    case SDL_SCANCODE_S: {
+    case SDLK_s: {
         direct[1] = glm::vec3(0.0f);
         //std::cout << "go back" << std::endl;
         break;
     }
-    case SDL_SCANCODE_D: {
+    case SDLK_d: {
         direct[2] = glm::vec3(0.0f);
         //std::cout << "go right" << std::endl;
         break;
     }
-    case SDL_SCANCODE_A: {
+    case SDLK_a: {
         direct[3] = glm::vec3(0.0f);
         //std::cout << "go ahead" << std::endl;
         break;
     }
-    case SDL_SCANCODE_SPACE: {
-        direct[4] = glm::vec3(0.0f);
+    case SDLK_SPACE: {
+        if (!jumping || !is_view_mode) direct[4] = glm::vec3(0.0f);
         break;
     }
-    case SDL_SCANCODE_LSHIFT: {
+    case SDLK_LSHIFT: {
         direct[5] = glm::vec3(0.0f);
         break;
     }
@@ -154,39 +181,43 @@ void Firework_Viewer::ProcessEvent(SDL_Event& event) {
 }
 
 void Firework_Viewer::ProcessCommand(SDL_Event& event) {
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_W: {
+    switch (event.key.keysym.sym) {
+    case SDLK_w: {
         direct[0] = glm::normalize(glm::vec3(Front.x, 0, Front.z));
         break;
     }
-    case SDL_SCANCODE_S: {
+    case SDLK_s: {
         direct[1] = -glm::normalize(glm::vec3(Front.x, 0, Front.z));
         break;
     }
-    case SDL_SCANCODE_D: {
-        direct[2] = -glm::normalize(glm::vec3(Right.x, 0, Right.z));
+    case SDLK_d: {
+        direct[2] = glm::normalize(glm::vec3(Right.x, 0, Right.z));
         break;
     }
-    case SDL_SCANCODE_A: {
-        direct[3] = glm::normalize(glm::vec3(Right.x, 0, Right.z));
+    case SDLK_a: {
+        direct[3] = -glm::normalize(glm::vec3(Right.x, 0, Right.z));
         break;
     }
-    case SDL_SCANCODE_SPACE: {
+    case SDLK_SPACE: {
         direct[4] = glm::vec3(0, 1, 0);
         break;
     }
-    case SDL_SCANCODE_LSHIFT: {
+    case SDLK_LSHIFT: {
         direct[5] = glm::vec3(0, -1, 0);
         break;
     }
-    case SDL_SCANCODE_ESCAPE: {
+    case SDLK_ESCAPE: {
         SDL_Event event;
         event.type = SDL_QUIT;
         SDL_PushEvent(&event);
         break;
     }
-    case SDL_SCANCODE_TAB: {
-        is_view_mode = !is_view_mode;
+    case SDLK_f: {
+        is_view_mode = true;
+        if (Position.y > 0.0f) {
+            direct[4].y = 0.0f;
+            jumping = true;
+        }
         break;
     }
     default: {

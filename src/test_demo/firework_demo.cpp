@@ -200,44 +200,52 @@ int main(int argc, char* args[]) {
     double last_frame_second = glfwGetTime();
     double current_second = 0;
     double frame_rate, last_flush_time; // 以秒为单位
+    // 延缓键盘消息处理频率
+    double last_handle_second;
+    double current_handle_second;
+
     while (!glfwWindowShouldClose(window)) {
         camera.HandleEvent();
-        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
-            fw_manager.Register_Firework(
-                1,
-                8,
-                camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                glm::vec3(0, 1, 0),
-                glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                3000 + glm::linearRand(0, 1) * 500
-            );
-        // if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
-        //     fw_manager.Register_Firework(
-        //         2,
-        //         8,
-        //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-        //         glm::vec3(1, 2, 0),
-        //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-        //         3000 + glm::linearRand(0, 1) * 500
-        //     );
-        // if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
-        //     fw_manager.Register_Firework(
-        //         3,
-        //         8,
-        //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-        //         glm::vec3(0, 1, 0),
-        //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-        //         3000 + glm::linearRand(0, 1) * 500
-        //     );
-        if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
-            fw_manager.Register_Firework(
-                0,
-                8,
-                camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                glm::vec3(0, 1, 0),
-                glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                3000 + glm::linearRand(0, 1) * 500
-            );
+        current_handle_second = glfwGetTime();
+        if (current_handle_second - last_handle_second > 0.1) {
+            last_handle_second = current_handle_second;
+            if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+                fw_manager.Register_Firework(
+                    1,
+                    8,
+                    camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+                    glm::vec3(0, 1, 0),
+                    glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+                    3000 + glm::linearRand(0, 1) * 500
+                );
+            // if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+            //     fw_manager.Register_Firework(
+            //         2,
+            //         8,
+            //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+            //         glm::vec3(1, 2, 0),
+            //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+            //         3000 + glm::linearRand(0, 1) * 500
+            //     );
+            // if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+            //     fw_manager.Register_Firework(
+            //         3,
+            //         8,
+            //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+            //         glm::vec3(0, 1, 0),
+            //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+            //         3000 + glm::linearRand(0, 1) * 500
+            //     );
+            if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
+                fw_manager.Register_Firework(
+                    0,
+                    8,
+                    camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+                    glm::vec3(0, 1, 0),
+                    glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+                    3000 + glm::linearRand(0, 1) * 500
+                );
+        }
 #endif
 
         glClearColor(0.1f, 0.1f, 0.2f, 1.0f); // 设置屏幕颜色
@@ -314,7 +322,7 @@ int main(int argc, char* args[]) {
         glfwSwapBuffers(window);
 #endif
 
-    }
+        }
 
     /***************************************************
      *              窗口-程序退出                           *
@@ -330,4 +338,4 @@ int main(int argc, char* args[]) {
     glfwTerminate();
 #endif
     return 0;
-}
+    }

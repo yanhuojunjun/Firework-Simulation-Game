@@ -42,7 +42,8 @@ Pipe_Firework::Pipe_Firework(
     );
     first_node.particle_emitter->EnableVelocityUpdater(1.0f, 0.0f);
     first_node.particle_emitter->AddMidVelocity(0.0, 0.7);
-    first_node.particle_emitter->EnableColorUpdater(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+    first_node.particle_emitter->EnableColorUpdater(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    first_node.particle_emitter->AddMidColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.5);
     first_node.particle_emitter->EnableLifetimeTolerance(0.2);
 
     switch (type) {

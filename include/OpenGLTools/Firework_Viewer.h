@@ -12,10 +12,12 @@ protected:
     // 控制移动距离
     Uint64 Last_Frame_time;
     Uint64 Time_Pass_By;
-    // 
+    // 走路浏览模式 否则飞行模式
     bool is_view_mode;
     // 连续移动 前后左右上下
     glm::vec3 direct[6];
+    // 跳跃
+    bool jumping;
 public:
     /*
         摄像机位置 世界上坐标 偏航角 俯仰角(不能超过90度)

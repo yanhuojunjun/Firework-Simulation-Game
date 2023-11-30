@@ -57,8 +57,15 @@ protected:
     float lastX;
     float lastY;
 
-    // 连续移动 前后左右上下
-    glm::vec3 direct[6];
+    float jump_init_velocity; // 跳跃初速度
+    
+    bool is_view_mode; // 走路浏览模式 否则飞行模式
+    
+    bool jumping; // 跳跃
+    
+    float velocity; // 帧位移
+
+    double last_handle_second, current_handle_second;
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

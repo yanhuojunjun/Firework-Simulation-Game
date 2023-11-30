@@ -79,6 +79,7 @@ int Shader::Build(const char* vertexPath, const char* fragmentPath) {
     // 删除着色器，它们已经链接到我们的程序中了，已经不再需要了
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+    return 0;
 }
 
 void Shader::use()
