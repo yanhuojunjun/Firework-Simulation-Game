@@ -22,7 +22,7 @@ find_package(OpenMP REQUIRED)
 
 # 设置选项
 # 第二个参数 如果为 ON 则使用GLFW库作为窗口及控制库 为 OFF 则使用SDL2库 
-set(GLFW_LIB_ENABLE ON CACHE BOOL "whether use glfw or sdl2" FORCE)
+set(GLFW_LIB_ENABLE OFF CACHE BOOL "whether use glfw or sdl2" FORCE)
 
 if(GLFW_LIB_ENABLE)
     message(STATUS "using glfw")
@@ -45,6 +45,7 @@ include_directories(${INCLUDE_DIR}/Lib_Include
                     ${INCLUDE_DIR}/Fireworks
                     ${INCLUDE_DIR}/Particles
                     ${INCLUDE_DIR}/Sound
+                    ${INCLUDE_DIR}/Animation
                     ${INCLUDE_DIR}/Lib_Include/assimp)
 # 链接库文件
 link_directories(${RUN_DIR}/lib

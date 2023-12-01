@@ -16,3 +16,6 @@ endif()
 
 add_executable(firework_demo firework_demo.cpp)
 
+add_executable(video_demo video_demo.cpp)
+target_link_libraries(video_demo PUBLIC animation animation_0)
+

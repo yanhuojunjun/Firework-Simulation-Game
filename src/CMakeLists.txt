@@ -13,4 +13,6 @@ add_subdirectory(Sound)
 
 add_subdirectory(Fireworks)
 
+add_subdirectory(Animation)
+
 add_subdirectory(test_demo)
