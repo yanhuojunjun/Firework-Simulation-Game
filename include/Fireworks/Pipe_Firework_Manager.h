@@ -29,7 +29,8 @@ public:
         glm::vec3 init_pos,
         glm::vec3 init_dire,
         glm::vec4 init_color,
-        int64_t b_time
+        int64_t b_time,
+        int32_t _init_node_type = 0
     );
     // 进行烟花的爆炸倒计时
     void Update(uint64_t deltatime);

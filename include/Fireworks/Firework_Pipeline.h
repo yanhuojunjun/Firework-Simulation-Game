@@ -45,7 +45,8 @@ public:
         glm::vec3 init_pos,
         glm::vec3 init_dire,
         glm::vec4 init_color,
-        int64_t b_time
+        int64_t b_time,
+        int32_t _init_node_type
     );
 
     bool Update(uint64_t delta_ms);
@@ -79,4 +80,5 @@ bool pipe1_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>
 
 bool pipe2_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 
+bool pipe3_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 #endif

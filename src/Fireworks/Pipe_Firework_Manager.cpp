@@ -19,7 +19,8 @@ int32_t Pipe_Firework_Manager::Register_Firework(
     glm::vec3 init_pos,
     glm::vec3 init_dire,
     glm::vec4 init_color,
-    int64_t b_time
+    int64_t b_time,
+    int32_t _init_node_type
 ) {
     fireworks.push_back(std::make_shared<Pipe_Firework>(
         _type,
@@ -31,8 +32,9 @@ int32_t Pipe_Firework_Manager::Register_Firework(
         init_pos,
         init_dire,
         init_color,
-        b_time
-    ));
+        b_time,
+        _init_node_type
+        ));
     return 0;
 }
 

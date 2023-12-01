@@ -182,16 +182,17 @@ int main(int argc, char* args[]) {
                         3000 + glm::linearRand(0, 1) * 500
                     );
                     break;
-                    // case SDLK_3:
-                    //     fw_manager.Register_Firework(
-                    //         3,
-                    //         8,
-                    //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                    //         glm::vec3(0, 1, 0),
-                    //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                    //         3000 + glm::linearRand(0, 1) * 500
-                    //     );
-                    //     break;
+                case SDLK_3:
+                    fw_manager.Register_Firework(
+                        3,
+                        10,
+                        camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+                        glm::vec3(0, 1, 0),
+                        glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+                        1000,
+                        1
+                        );
+                    break;
                 }
             }
         }
