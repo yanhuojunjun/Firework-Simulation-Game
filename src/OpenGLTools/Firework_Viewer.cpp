@@ -1,21 +1,21 @@
 #include "Firework_Viewer.h"
 
-Firework_Viewer::Firework_Viewer(glm::vec3 position, glm::vec3 up, float yaw, float pitch) {
-    ICamera(position, up, yaw, pitch);
+Firework_Viewer::Firework_Viewer(glm::vec3 position, glm::vec3 up, float yaw, float pitch) :ICamera(position, up, yaw, pitch) {
     ICamera::updateCameraVectors();
     Last_Frame_time = SDL_GetTicks64();
     Time_Pass_By = 0;
     is_view_mode = true;
     jumping = false;
+    for (int i = 0;i < 6;i++) direct[i] = glm::vec3(0.0f);
 }
 
-Firework_Viewer::Firework_Viewer(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) {
-    ICamera(posX, posY, posZ, upX, upY, upZ, yaw, pitch);
+Firework_Viewer::Firework_Viewer(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) :ICamera(posX, posY, posZ, upX, upY, upZ, yaw, pitch) {
     updateCameraVectors();
     Last_Frame_time = SDL_GetTicks64();
     Time_Pass_By = 0;
     is_view_mode = true;
     jumping = false;
+    for (int i = 0;i < 6;i++) direct[i] = glm::vec3(0.0f);
 }
 
 Firework_Viewer::~Firework_Viewer() {}
