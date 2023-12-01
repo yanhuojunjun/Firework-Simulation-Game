@@ -29,11 +29,10 @@ class skybox {
 public:
     float skyboxVertices[36 * 3];
     unsigned int skyboxVAO, skyboxVBO;
-    Shader shader, skyboxShader;
+    Shader skyboxShader;
     unsigned int cubemapTexture;
     ICamera* camera;
     skybox(ICamera* c):camera(c) {
-        shader = Shader("Shaders/6.2.cubemaps.vs", "Shaders/6.2.cubemaps.fs");
         skyboxShader = Shader("Shaders/6.2.skybox.vs", "Shaders/6.2.skybox.fs");
         float tmp[] = {
             // positions          
@@ -89,9 +88,6 @@ public:
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-        shader.use();
-        shader.setInt("skybox", 0);
-
         skyboxShader.use();
         skyboxShader.setInt("skybox", 0);
         cubemapTexture = loadCubemap(faces);
@@ -103,16 +99,8 @@ public:
         glDeleteBuffers(1, &skyboxVBO);
     }
     void draw() {
-        // draw scene as normal
-        // printf("haha\n");
-        shader.use();
-        glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = camera->GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 100.0f);
-        shader.setMat4("model", model);
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-        shader.setVec3("cameraPos", camera->Position);
 
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content

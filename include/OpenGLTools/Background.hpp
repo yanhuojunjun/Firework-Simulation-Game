@@ -2,6 +2,8 @@
 #define BACKGROUND_HPP
 
 #include "ICamera.h"
+#include "Shader.h"
+#include <vector>
 
 extern unsigned int WIN_WIDTH;
 extern unsigned int WIN_HEIGHT;
@@ -232,7 +234,6 @@ public:
         // -------------------------------------------------------------------------------------------
         ourShader->use();
         ourShader->setInt("texture1", 0);
-        ourShader->setInt("texture2", 1);
     }
 
     ~Background() {
