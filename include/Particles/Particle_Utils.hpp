@@ -46,7 +46,7 @@ public:
     void GetInterpolation(T& value, float t) {
         for (int i = 1;i < tags.size();i++) {
             if (tags[i].t >= t) {
-                value = ((t - tags[i - 1].t) * tags[i].value + (tags[i].t - t) * tags[i - 1].value) / (tags[i].t - tags[i - 1].t);
+                value = static_cast<T>(((t - tags[i - 1].t) * tags[i].value + (tags[i].t - t) * tags[i - 1].value) / (tags[i].t - tags[i - 1].t));
                 return;
             }
         }

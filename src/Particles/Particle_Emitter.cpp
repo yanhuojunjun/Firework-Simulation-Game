@@ -12,6 +12,7 @@ ParticleEmitter::ParticleEmitter() {
     enable_color_interpolation = false;
     enable_velocity_interpolation = false;
     enable_emitter_radial_acc = false;
+    enable_lifetime_interpolation = false;
 }
 
 ParticleEmitter::ParticleEmitter(
@@ -76,11 +77,12 @@ ParticleEmitter::ParticleEmitter(
         _e_direction,
         _e_acceleration,
         _e_type
-        );
+    );
     one_shoot = false;
     enable_color_interpolation = false;
     enable_velocity_interpolation = false;
     enable_emitter_radial_acc = false;
+    enable_lifetime_interpolation = false;
 }
 
 void ParticleEmitter::SetParticleEmitter(
@@ -150,6 +152,7 @@ void ParticleEmitter::SetParticleEmitter(
     enable_color_interpolation = false;
     enable_velocity_interpolation = false;
     enable_emitter_radial_acc = false;
+    enable_lifetime_interpolation = false;
 }
 
 void ParticleEmitter::EnableOneShoot() {
@@ -196,6 +199,20 @@ void ParticleEmitter::DisableVelocityUpdater() {
     enable_velocity_interpolation = false;
 }
 
+void ParticleEmitter::EnableLifetimeUpdater(int64_t start, int64_t end) {
+    enable_lifetime_interpolation = true;
+    lifetime_interpolation.Init(start, end);
+}
+
+void ParticleEmitter::AddMidLifetime(int64_t l, float t) {
+    if (!enable_lifetime_interpolation) return;
+    lifetime_interpolation.AddTag(l, t);
+}
+
+void ParticleEmitter::DisableLifetimeUpdater() {
+    enable_lifetime_interpolation = false;
+}
+
 void ParticleEmitter::EnableRadialAcc(float _radial_acc, glm::vec3 _radial_axle) {
     enable_emitter_radial_acc = true;
     radial_axle = _radial_axle;
@@ -234,6 +251,15 @@ void ParticleEmitter::Emit() {
         if (!particles[i].alive()) {
             emitter->EmitParticle(particles[i]);
             last_generate_index = i;
+            // 如果启用了生命值插值
+            if (enable_lifetime_interpolation) {
+                lifetime_interpolation.GetInterpolation(particles[last_generate_index].totallifetime, static_cast<float>(total_lifetime - lifetime) / static_cast<float>(total_lifetime));
+            }
+            else particles[last_generate_index].totallifetime = emitter->particle_lifetime;
+            // 生命值误差不为 0.0f 则添加随机误差
+            if (emitter->lifetime_tolerance != 0.0f) particles[last_generate_index].totallifetime += emitter->lifetime_tolerance * glm::linearRand(-1.0f, 1.0f) * emitter->particle_lifetime;
+            // 根据总生命值设置粒子初始生命值
+            particles[last_generate_index].lifetime = particles[last_generate_index].totallifetime;
             return;
         }
     }
@@ -242,6 +268,15 @@ void ParticleEmitter::Emit() {
         if (!particles[i].alive()) {
             emitter->EmitParticle(particles[i]);
             last_generate_index = i;
+            // 如果启用了生命值插值
+            if (enable_lifetime_interpolation) {
+                lifetime_interpolation.GetInterpolation(particles[last_generate_index].totallifetime, static_cast<float>(total_lifetime - lifetime) / static_cast<float>(total_lifetime));
+            }
+            else particles[last_generate_index].totallifetime = emitter->particle_lifetime;
+            // 生命值误差不为 0.0f 则添加随机误差
+            if (emitter->lifetime_tolerance != 0.0f) particles[last_generate_index].totallifetime += emitter->lifetime_tolerance * glm::linearRand(-1.0f, 1.0f) * emitter->particle_lifetime;
+            // 根据总生命值设置粒子初始生命值
+            particles[last_generate_index].lifetime = particles[last_generate_index].totallifetime;
             return;
         }
     }
@@ -249,6 +284,15 @@ void ParticleEmitter::Emit() {
     ++last_generate_index;
     if (last_generate_index >= max_particle_num) last_generate_index = 0;
     emitter->EmitParticle(particles[last_generate_index]);
+    // 如果启用了生命值插值
+    if (enable_lifetime_interpolation) {
+        lifetime_interpolation.GetInterpolation(particles[last_generate_index].totallifetime, static_cast<float>(total_lifetime - lifetime) / static_cast<float>(total_lifetime));
+    }
+    else particles[last_generate_index].totallifetime = emitter->particle_lifetime;
+    // 生命值误差不为 0.0f 则添加随机误差
+    if (emitter->lifetime_tolerance != 0.0f) particles[last_generate_index].totallifetime += emitter->lifetime_tolerance * glm::linearRand(-1.0f, 1.0f) * emitter->particle_lifetime;
+    // 根据总生命值设置粒子初始生命值
+    particles[last_generate_index].lifetime = particles[last_generate_index].totallifetime;
 }
 
 bool ParticleEmitter::Update(uint64_t deltatime) {

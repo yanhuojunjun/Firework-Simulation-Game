@@ -29,6 +29,8 @@ protected:
     Interpolation <glm::vec4> color_interpolation;      // 颜色插值标记点
     bool enable_velocity_interpolation;                 // 是否启用粒子速度插值更新
     Interpolation<float> velocity_interpolation;        // 速度插值标记点
+    bool enable_lifetime_interpolation;                 // 启用粒子生命值线性插值
+    Interpolation<int64_t> lifetime_interpolation;     // 粒子生命值插值标记点
     bool enable_emitter_radial_acc;                     // 是否启用粒子发射器径向加速度
     glm::vec3 radial_axle;                              // 粒子发射器径向加速度指向的中心轴
 
@@ -149,6 +151,22 @@ public:
     void AddMidVelocity(float v, float t);
     // 取消速度插值
     void DisableVelocityUpdater();
+    /**
+     *@brief 启用粒子生命值线性插值产生同时消失效果, 生命值从start到end线性变化
+     *
+     * @param start int64_t 粒子发射器初始时产生的粒子的生命值
+     * @param end int64_t 粒子发射器消失时产生的粒子的生命值
+     */
+    void EnableLifetimeUpdater(int64_t start, int64_t end);
+    /**
+     *@brief 添加产生粒子生命值变化的中间点, 实现对粒子发射器产生的粒子生命值的多段线性插值
+     *
+     * @param l int64_t 粒子生命值
+     * @param t 粒子发射器产生该生命值粒子的时间点, 范围 [0, 1]
+     */
+    void AddMidLifetime(int64_t l, float t);
+    // 取消速度插值
+    void DisableLifetimeUpdater();
 
     /**
      *@brief 启用并设置粒子发射器径向加速度

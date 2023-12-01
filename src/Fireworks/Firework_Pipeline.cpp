@@ -378,6 +378,7 @@ bool pipe2_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         new_node.particle_emitter->EnableColorUpdater(glm::vec4(1.0f, 0.7f, 0.5f, 1.0f), glm::vec4(0.0f, 0.2f, 0.1f, 0.1f));
         new_node.particle_emitter->AddMidColor(0.7f * glm::vec4(1.0f, 0.7f, 0.5f, 1.0f), 0.7);
         new_node.particle_emitter->EnableLifetimeTolerance(0.2);
+        new_node.particle_emitter->EnableLifetimeUpdater(2000, 500);
         // 设置下一节点
         new_node.Create_Next = pipe_end;
         // 添加到节点列表

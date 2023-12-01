@@ -11,6 +11,8 @@
 #include <cstdarg>
 #include <iostream>
 
+#include "Particle_Utils.hpp"
+
 // 粒子类
 struct Particle {
     // 渲染所需参数

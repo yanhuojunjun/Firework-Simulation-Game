@@ -172,16 +172,16 @@ int main(int argc, char* args[]) {
                         3000 + glm::linearRand(0, 1) * 500
                     );
                     break;
-                    // case SDLK_2:
-                    //     fw_manager.Register_Firework(
-                    //         2,
-                    //         8,
-                    //         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                    //         glm::vec3(1, 2, 0),
-                    //         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
-                    //         3000 + glm::linearRand(0, 1) * 500
-                    //     );
-                    //     break;
+                case SDLK_2:
+                    fw_manager.Register_Firework(
+                        2,
+                        10,
+                        camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
+                        glm::vec3(1, 2, 0),
+                        glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
+                        3000 + glm::linearRand(0, 1) * 500
+                    );
+                    break;
                     // case SDLK_3:
                     //     fw_manager.Register_Firework(
                     //         3,
@@ -267,6 +267,8 @@ int main(int argc, char* args[]) {
         // 更新帧时间
         now_frame_time = SDL_GetTicks64();
         delta_frame_time = now_frame_time - last_frame_time;
+        last_frame_time = now_frame_time;
+
         // 更新烟花
         fw_manager.Update(delta_frame_time);
         // 更新粒子发射器并渲染
@@ -312,9 +314,6 @@ int main(int argc, char* args[]) {
         // 交换缓冲
         SDL_GL_SwapWindow(win);
         camera.FlushFrameTime();
-
-        // 更新帧时间
-        last_frame_time = now_frame_time;
 #else
         // 控制帧率
         frame_rate = 1.0 / delta_second;

@@ -57,12 +57,6 @@ void LineEmitter::EmitParticle(Particle& particle) {
     // 否则限定在散度范围内随机发散
     if (divergence == 0.0f) particle.velocity = particle_initial_velocity * particle_initial_direction;
     else particle.velocity = particle_initial_velocity * glm::normalize(particle_initial_direction - 2.0f * divergence * glm::normalize(glm::sphericalRand(divergence)));
-    // 生命值误差为 0.0f 则是固定值
-    // 否则添加在误差容许范围内的随机误差
-    if (lifetime_tolerance == 0.0f) particle.totallifetime = particle_lifetime;
-    else particle.totallifetime = particle_lifetime + lifetime_tolerance * glm::linearRand(-1.0f, 1.0f) * particle_lifetime;
-    // 初始生命值
-    particle.lifetime = particle.totallifetime;
 }
 
 /********************************************************
@@ -103,11 +97,6 @@ void CircleEmitter::EmitParticle(Particle& particle) {
     particle.position = emitter_center + radius * velocity;
     particle.color = particle_color;
     particle.size = particle_size;
-    // 生命值误差为 0.0f 则是固定值
-    // 否则添加在误差容许范围内的随机误差
-    if (lifetime_tolerance == 0.0f) particle.totallifetime = particle_lifetime;
-    else particle.totallifetime = particle_lifetime + lifetime_tolerance * glm::linearRand(-1.0f, 1.0f) * particle_lifetime;
-    particle.lifetime = particle.totallifetime;
 }
 
 /********************************************************
@@ -125,10 +114,4 @@ void SphereEmitter::EmitParticle(Particle& particle) {
     particle.position = emitter_center + radius * glm::normalize(glm::sphericalRand(1.0f));
     particle.color = particle_color;
     particle.size = particle_size;
-    // 生命值误差为 0.0f 则是固定值
-    // 否则添加在误差容许范围内的随机误差
-    if (lifetime_tolerance == 0.0f) particle.totallifetime = particle_lifetime;
-    else particle.totallifetime = particle_lifetime + lifetime_tolerance * glm::linearRand(-1.0f, 1.0f) * particle_lifetime;
-    particle.lifetime = particle.totallifetime;
-
 }
