@@ -35,9 +35,15 @@ protected:
     // 人物音
     std::vector<Mix_Chunk*> put;
 
+    // 音效启用
+    bool enable_sound;
+
 public:
     Sound_Player();
     void StartBKSound();
+    void CloseBKSound();
+    void StartSound();
+    void CloseSound();
     void PlayOne(Sound_Type _type);
     ~Sound_Player();
 };

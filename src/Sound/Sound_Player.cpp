@@ -2,7 +2,7 @@
 
 Sound_Player::Sound_Player() {
     std::string path = "";
-    bk_music = Mix_LoadMUS("sound/反方向的钟.mp3");
+    bk_music = Mix_LoadMUS("sound/ThisIsMe.mp3");
 
     // 读取飞行音效
     fly = Mix_LoadWAV("sound/firework_fly1.wav");
@@ -60,6 +60,8 @@ Sound_Player::Sound_Player() {
         }
     }
     std::cout << "put num: " << put.size() << std::endl;
+
+    enable_sound = false;
 }
 
 void Sound_Player::StartBKSound() {
@@ -68,7 +70,20 @@ void Sound_Player::StartBKSound() {
     Mix_VolumeMusic(20);
 }
 
+void Sound_Player::CloseBKSound() {
+    Mix_HaltMusic();
+}
+
+void Sound_Player::StartSound() {
+    enable_sound = true;
+}
+
+void Sound_Player::CloseSound() {
+    enable_sound = false;
+}
+
 void Sound_Player::PlayOne(Sound_Type _type) {
+    if (!enable_sound) return;
     switch (_type)
     {
         
