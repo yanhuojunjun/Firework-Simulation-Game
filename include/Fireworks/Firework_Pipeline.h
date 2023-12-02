@@ -81,4 +81,6 @@ bool pipe1_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>
 bool pipe2_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 
 bool pipe3_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
+
+bool pipe4_0(std::list<Firework_Pipeline_Node>&, std::shared_ptr<Emitter_Render>, Firework_Pipeline_Node&);
 #endif
