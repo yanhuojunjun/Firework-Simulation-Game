@@ -135,6 +135,7 @@ int main(int argc, char* args[]) {
     // 构建动画序列帧
     Animation_0 animation_0(fw_manager);
     animation_0.Build();
+    sound_player->StartBKSound();
     // 开启Z缓冲
     glEnable(GL_DEPTH_TEST);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //图元绘制设置为默认(填充)模式

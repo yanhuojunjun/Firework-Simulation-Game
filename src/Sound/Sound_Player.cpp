@@ -67,7 +67,7 @@ Sound_Player::Sound_Player() {
 void Sound_Player::StartBKSound() {
     // 播放背景音频并调整音量至合适大小
     Mix_PlayMusic(bk_music, -1);
-    Mix_VolumeMusic(20);
+    Mix_VolumeMusic(80);
 }
 
 void Sound_Player::CloseBKSound() {

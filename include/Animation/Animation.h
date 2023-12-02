@@ -9,6 +9,10 @@
 #include "glfw3.h"
 #endif
 
+struct Animation_Frame;
+
+typedef std::function<void(std::shared_ptr<Pipe_Firework_Manager>)> FrameFunction;
+
 // 睡眠时间
 union sleep_time {
     int64_t sdl_sleep_time;
@@ -16,30 +20,16 @@ union sleep_time {
 };
 
 struct Animation_Frame {
-    // 参数列表
-    int32_t firework_type;
-    float firework_init_v;
-    glm::vec3 firework_init_pos;
-    glm::vec3 firework_init_dire;
-    glm::vec4 firework_init_color;
-    int64_t firework_b_time;
+    // 帧行为
+    FrameFunction func;
     // 帧休眠时间
     sleep_time total_sleep_time;
     // 构造
+    Animation_Frame() = default;
     Animation_Frame(
-        int32_t _firework_type,
-        float _firework_init_v,
-        glm::vec3 _firework_init_pos,
-        glm::vec3 _firework_init_dire,
-        glm::vec4 _firework_init_color,
-        int64_t _firework_b_time,
+        FrameFunction _func,
         sleep_time _total_sleep_time
-    ) :firework_type(_firework_type),
-        firework_init_v(_firework_init_v),
-        firework_init_pos(_firework_init_pos),
-        firework_init_dire(_firework_init_dire),
-        firework_init_color(_firework_init_color),
-        firework_b_time(_firework_b_time),
+    ) : func(_func),
         total_sleep_time(_total_sleep_time) {}
 };
 
@@ -57,15 +47,10 @@ protected:
     std::shared_ptr<Pipe_Firework_Manager> manager;
 public:
     Animation(std::shared_ptr<Pipe_Firework_Manager> _manager, int n = 0);
-    void Add_Frame(const Animation_Frame& new_frame);
+    virtual void Build() = 0;
     void Play(double delta_time);
     void Play(uint64_t delta_time);
     virtual ~Animation();
-protected:
-
-    void Use_Param();
-
-
 };
 
 #endif
