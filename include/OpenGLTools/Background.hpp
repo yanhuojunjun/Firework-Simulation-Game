@@ -277,7 +277,7 @@ public:
         char buf[1000];
         for (int i = 0; i < max_len; i++) {
             sprintf(buf, "pointLights[%d].position", i);
-            ourShader->setVec3(buf, light[i * 1], light[i * 2 + 1], light[i * 3 + 2]);
+            ourShader->setVec3(buf, light[i * 6], light[i * 6 + 1], light[i * 6 + 2]);
             sprintf(buf, "pointLights[%d].ambient", i);
             ourShader->setVec3(buf, 0.05f, 0.05f, 0.05f);
             sprintf(buf, "pointLights[%d].diffuse", i);
@@ -290,7 +290,7 @@ public:
             sprintf(buf, "pointLights[%d].quadratic", i);
             ourShader->setFloat(buf, 0.032f);
             sprintf(buf, "pointLights[%d].lightcolor", i);
-            ourShader->setVec3(buf, light[i * 4 + 3], light[i * 5 + 4], light[i * 6 + 5]);
+            ourShader->setVec3(buf, light[i * 6 + 3], light[i * 6 + 4], light[i * 6 + 5]);
         }
         for (int i = max_len; i < 1000; i++) {
             sprintf(buf, "pointLights[%d].constant", i);
