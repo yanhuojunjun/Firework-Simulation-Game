@@ -309,7 +309,7 @@ int main(int argc, char* args[]) {
         ***************************************************/
         bloom_worker.draw_world();//画世界------------------------------
         sky.draw();
-        background.draw();
+        background.draw(emitter_render->GetPointLight());
         emitter_render->Render();
 
         bloom_worker.draw_firework();//画烟花-------------------------------
