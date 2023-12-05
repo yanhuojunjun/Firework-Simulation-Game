@@ -3,7 +3,27 @@
 
 #include "ICamera.h"
 #include "Shader.h"
+#include "glm/gtc/random.hpp"
 #include <vector>
+
+struct firework_init {
+    int32_t _type;
+    float init_v;
+    glm::vec3 init_pos;
+    glm::vec3 init_dire;
+    glm::vec4 init_color;
+    int64_t b_time;
+    int32_t _init_node_type;
+
+    firework_init(glm::vec3 init_pos, int32_t _type) : init_pos(init_pos), _type(_type) {
+        // _type = rand() % 5;
+        init_v = 10.0f + rand() % 1000 / 100.0f;
+        init_dire = glm::vec3(0.0f, 1.0f, 0.0f);
+        init_color = glm::vec4(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f);
+        b_time = 2000 + glm::linearRand(-500.0f, 500.0f);
+        _init_node_type = 0; //rand() % 3;
+    }
+};
 
 class Firebox {
     ICamera* mcamera;
@@ -12,11 +32,12 @@ class Firebox {
     float z;
     std::vector<glm::vec3> cubePositions;
     std::vector<glm::vec3> fireboxPositions;
+    
     unsigned int VBO, VAO;
     unsigned int texture1, texture2, texture3, texture4, texture5, texture6;
 public:
     bool life;
-
+    std::vector<firework_init> firework_entry;
 public:
     Firebox(float z, ICamera* mcamera) : z(z + 1), mcamera(mcamera) {
         life = false;
@@ -285,23 +306,30 @@ public:
 
     void clear() {
         fireboxPositions.clear();
+        firework_entry.clear();
     }
 
-    void push() {
-        if (life) {
-            glm::vec3 front = mcamera->Front;
-            glm::vec3 pos = mcamera->Position;
-            fireboxPositions.push_back(glm::vec3(front[0] * 4 + pos[0], 0, front[2] * 4 + pos[2]));
+    void push(int type) {
+        glm::vec3 front = mcamera->Front;
+        glm::vec3 pos = mcamera->Position;
+        float size = 0.01f;
+        float frac = pos[1] - z + z * size - 1.5f + 2.0f;
+        if (!fireboxPositions.empty()) {
+            if (type == -1) type = rand() % 6;
+            firework_entry.push_back(firework_init(glm::vec3(front[0] / front[1] * -frac + pos[0], 0, front[2] / front[1] * -frac + pos[2]), type));
         }
+        fireboxPositions.push_back(glm::vec3(front[0] / front[1] * -frac + pos[0], 0, front[2] / front[1] * -frac + pos[2]));
     }
 
     void draw(const std::vector<float> light) {
         if (fireboxPositions.empty()) {
-            push();
+            push(-1);
         }
         glm::vec3 front = mcamera->Front;
         glm::vec3 pos = mcamera->Position;
-        if(life) fireboxPositions[0] = glm::vec3(front[0] * 4 + pos[0], 0, front[2] * 4 + pos[2]);
+        float size = 0.01f;
+        float frac = pos[1] - z + z * size - 1.5f + 2.0f;
+        if (life) fireboxPositions[0] = glm::vec3(front[0] / front[1] * -frac + pos[0], 0, front[2] / front[1] * -frac + pos[2]);
         // bind textures on corresponding texture units
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);

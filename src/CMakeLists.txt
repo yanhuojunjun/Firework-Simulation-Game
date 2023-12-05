@@ -5,8 +5,6 @@ add_library(stb_image STATIC stb_image.cpp)
 
 add_subdirectory(OpenGLTools)
 
-add_subdirectory(Object)
-
 add_subdirectory(Particles)
 
 add_subdirectory(Sound)

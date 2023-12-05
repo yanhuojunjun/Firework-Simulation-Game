@@ -103,7 +103,7 @@ void bloom::draw_gauss(){
 
     horizontal = true;
     first_iteration = true;
-    unsigned int amount = 10;
+    unsigned int amount = 20;
     gauss_shader.use();
     for (unsigned int i = 0; i < amount; i++)
     {

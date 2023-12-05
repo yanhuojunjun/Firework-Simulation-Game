@@ -25,7 +25,7 @@ Pipe_Firework::Pipe_Firework(
             80,                                         // 最大粒子数
             b_time,                                     // 粒子发射器生命值
             init_pos,                                   // 粒子发射器中心
-            4.0f * init_color,                          // 粒子颜色
+            init_color,                          // 粒子颜色
             100,                                        // 粒子大小
             500,                                        // 粒子生命周期
             0.01f,                                      // 粒子初速度
@@ -35,7 +35,7 @@ Pipe_Firework::Pipe_Firework(
             0,                                          // 纹理
             init_v,                                     // 发射器移动速度
             init_dire,                                  // 发射器运动方向
-            glm::vec3(0.0f, -0.1f, 0.0f),               // 发射器加速度
+            glm::vec3(0.0f, -1.0f, 0.0f),               // 发射器加速度
             EmitterType::Sphere,                        // 粒子发射器类型
             0.0f,                                       // 圆形粒子发射器-半径
             DirectionType::Outer                        // 圆形粒子发射器-朝向类型
@@ -51,7 +51,7 @@ Pipe_Firework::Pipe_Firework(
             500,                                   // 最大粒子数
             b_time,                                        // 发射器生命
             init_pos,                               // 粒子发射器中心
-            4.0f * init_color,                      // 粒子颜色
+            init_color,                      // 粒子颜色
             150,                                     // 粒子大小
             1500,                                    // 粒子生命周期
             0.1f,                                      // 粒子初速度
@@ -206,7 +206,7 @@ bool pipe0_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
             0.01f,                                      // 粒子初速度
             glm::normalize(glm::vec3(0, 1, 0)),        // 粒子初始方向
             glm::vec3(0, -0.005, 0),                     // 粒子加速度
-            50,                                     // 粒子发射间隔
+            1000,                                     // 粒子发射间隔
             0,                                      // 纹理
             3.0f,                                    // 发射器移动速度
             glm::sphericalRand(1.0f),// 发射器运动方向
@@ -308,11 +308,11 @@ bool pipe0_2(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
 
 bool pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_Render> render, Firework_Pipeline_Node& father) {
     Firework_Pipeline_Node new_node;
-    for (int i = 0;i < 10;i++) {
+    //for (int i = 0;i < 10;i++) {
         new_node.created_next = false;
         // 设置粒子发射器
         new_node.particle_emitter = std::make_shared<ParticleEmitter>(
-            50,                                   // 最大粒子数
+            2000,                                   // 最大粒子数
             100,                                    // 发射器生命
             father.particle_emitter->GetEmitterCenter(),      // 粒子发射器中心
             glm::vec4(1.0f, 1.0f, 0.5f, 1.0f),      // 粒子颜色
@@ -327,7 +327,7 @@ bool pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
             glm::vec3(0, 1, 0),            // 发射器运动方向
             glm::vec3(0.0f, 0.0f, 0.0f),            // 发射器加速度
             EmitterType::Sphere,                    // 粒子发射器类型
-            0.0f,                                       // 圆形粒子发射器-半径
+            1.0f,                                       // 圆形粒子发射器-半径
             DirectionType::Outer                  // 圆形粒子发射器-朝向类型
         );
         new_node.particle_emitter->EnableColorUpdater(glm::vec4(father.particle_emitter->GetEmitterColor(), 1.0f), glm::vec4(0.0f, 0.2f, 0.1f, 0.1f));
@@ -342,7 +342,7 @@ bool pipe1_0(std::list<Firework_Pipeline_Node>& nodes, std::shared_ptr<Emitter_R
         nodes.push_front(new_node);
         // 添加到渲染器
         render->AddEmitter(new_node.particle_emitter);
-    }
+    //}
     return true;
 }
 

@@ -154,6 +154,11 @@ int main(int argc, char* args[]) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) quit_flag = true;
             camera.ProcessEvent(event);
+            if (event.type == SDL_MOUSEBUTTONDOWN) {
+                if (event.button.button == SDL_BUTTON_LEFT) {
+                    
+                }
+            }
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
                 case SDLK_0:
@@ -165,8 +170,10 @@ int main(int argc, char* args[]) {
                         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
                         3000 + glm::linearRand(0, 1) * 500
                     );
+                    firebox_ptr->push(0);
                     break;
                 case SDLK_1:
+                    
                     fw_manager.Register_Firework(
                         1,
                         8,
@@ -175,6 +182,7 @@ int main(int argc, char* args[]) {
                         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
                         3000 + glm::linearRand(0, 1) * 500
                     );
+                    firebox_ptr->push(1);
                     break;
                 case SDLK_2:
                     fw_manager.Register_Firework(
@@ -185,6 +193,7 @@ int main(int argc, char* args[]) {
                         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
                         3000 + glm::linearRand(0, 1) * 500
                     );
+                    firebox_ptr->push(2);
                     break;
                 case SDLK_3:
                     fw_manager.Register_Firework(
@@ -195,7 +204,8 @@ int main(int argc, char* args[]) {
                         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
                         1000,
                         1
-                        );
+                    );
+                    firebox_ptr->push(3);
                     break;
                 case SDLK_4:
                     fw_manager.Register_Firework(
@@ -207,6 +217,7 @@ int main(int argc, char* args[]) {
                         100,
                         2
                     );
+                    firebox_ptr->push(4);
                     break;
                 case SDLK_5:
                     fw_manager.Register_Firework(
@@ -218,11 +229,26 @@ int main(int argc, char* args[]) {
                         1000,
                         1
                     );
+                    firebox_ptr->push(5);
                     break;
                 case SDLK_q:
-                    firebox_ptr->push();
+                    firebox_ptr->push(-1);
                     break;
                 case SDLK_e:
+                    for (auto param : firebox_ptr->firework_entry) {
+                        fw_manager.Register_Firework(
+                            param._type,
+                            param.init_v,
+                            param.init_pos,
+                            param.init_dire,
+                            param.init_color,
+                            param.b_time,
+                            param._init_node_type
+                        );
+                    }
+                    //firebox_ptr->clear();
+                    break;
+                case SDLK_r:
                     firebox_ptr->clear();
                     break;
                 case SDLK_p:
