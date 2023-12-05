@@ -9,6 +9,7 @@
 #include "gtc/type_ptr.hpp"
 #include "SkyBox.hpp"
 #include "Background.hpp"
+#include "FireBox.hpp"
 #include "Shader.h"
 #include "bloom.h"
 // 烟花
@@ -28,7 +29,7 @@ const float FPS = 62.0f;
 #include "Camera_GLFW.h"
 Camera_GLFW camera;
 #endif
-
+Firebox* firebox_ptr;
 // 窗口标题
 std::string win_title = "emitter_demo FPS:" + std::to_string(0);
 
@@ -118,6 +119,9 @@ int main(int argc, char* args[]) {
     skybox sky(&camera);
     // 地面
     Background background(50, 50, -1.0f, &camera);
+    // 
+    Firebox firebox(-1.0f, &camera);
+    firebox_ptr = &firebox;
     //bloom
     bloom bloom_worker(true, 0.3f, WIN_WIDTH, WIN_HEIGHT);//创建-------------------------
     // 创建渲染器
@@ -215,6 +219,15 @@ int main(int argc, char* args[]) {
                         1
                     );
                     break;
+                case SDLK_q:
+                    firebox_ptr->push();
+                    break;
+                case SDLK_e:
+                    firebox_ptr->clear();
+                    break;
+                case SDLK_p:
+                    firebox_ptr->life = !firebox_ptr->life;
+                    break;
                 }
             }
         }
@@ -310,6 +323,7 @@ int main(int argc, char* args[]) {
         bloom_worker.draw_world();//画世界------------------------------
         sky.draw();
         background.draw(emitter_render->GetPointLight());
+        firebox_ptr->draw(emitter_render->GetPointLight());
         emitter_render->Render();
 
         bloom_worker.draw_firework();//画烟花-------------------------------
