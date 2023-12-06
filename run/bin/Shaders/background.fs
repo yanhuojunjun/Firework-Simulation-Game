@@ -95,7 +95,7 @@ void main()
     // this fragment's final color.
     // == =====================================================
     // phase 1: directional lighting
-    vec3 result = 0.7*CalcDirLight(dirLight, norm, viewDir); //需要一直有自然光的照射
+    vec3 result = CalcDirLight(dirLight, norm, viewDir); //需要一直有自然光的照射
     // phase 2: point lights
     // result += CalcPointLight(pointLights[0], norm, FragPos, viewDir);
     // result += CalcPointLight(pointLights[1], norm, FragPos, viewDir);

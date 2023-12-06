@@ -1,0 +1,12 @@
+# Blender 3.6.5 MTL File: 'camping.blend'
+# www.blender.org
+
+newmtl Material
+Ns 155.493164
+Ka 0.035461 0.035461 0.035461
+Ks 0.053191 0.053191 0.053191
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd wMPdOV9z.png

@@ -12,6 +12,7 @@
 #include "FireBox.hpp"
 #include "Shader.h"
 #include "bloom.h"
+#include "environment.h"
 // 烟花
 #include "Pipe_Firework_Manager.h"
 
@@ -120,6 +121,7 @@ int main(int argc, char* args[]) {
     // 地面
     Background background(50, 50, -1.0f, &camera);
     // 
+    environment env(&camera);
     Firebox firebox(-1.0f, &camera);
     firebox_ptr = &firebox;
     //bloom
@@ -135,7 +137,6 @@ int main(int argc, char* args[]) {
     // 创建烟花
     Pipe_Firework_Manager fw_manager(emitter_render);
 #endif
-
 
     // 开启Z缓冲
     glEnable(GL_DEPTH_TEST);
@@ -348,7 +349,9 @@ int main(int argc, char* args[]) {
         ***************************************************/
         bloom_worker.draw_world();//画世界------------------------------
         sky.draw();
+        
         background.draw(emitter_render->GetPointLight());
+        env.draw(emitter_render->GetPointLight());
         firebox_ptr->draw(emitter_render->GetPointLight());
         emitter_render->Render();
 
