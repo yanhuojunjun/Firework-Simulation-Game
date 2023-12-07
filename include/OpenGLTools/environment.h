@@ -20,7 +20,7 @@ class environment{
     Shader model_shader;
     Model house_model;
     ICamera* camera;
-    environment(ICamera* _camera) :model_shader(Shader("Shaders/insert_model.vs", "Shaders/model_loading.fs")),
+    environment(ICamera* _camera) :model_shader(Shader("Shaders/background.vs", "Shaders/background.fs")),
         house_model(Model("Object/scence/all_in_one.obj")),
     camera(_camera)
     {
