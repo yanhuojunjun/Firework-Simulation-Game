@@ -356,7 +356,6 @@ int main(int argc, char* args[]) {
         emitter_render->Render();
 
         bloom_worker.draw_firework();//画烟花-------------------------------
-        emitter_render->Render();
 
         bloom_worker.draw_gauss(); //gauss 模糊--------------------------------------
 
