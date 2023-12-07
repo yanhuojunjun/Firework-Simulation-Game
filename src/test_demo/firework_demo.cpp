@@ -16,8 +16,8 @@
 // 烟花
 #include "Pipe_Firework_Manager.h"
 
-unsigned int WIN_WIDTH = 1200;
-unsigned int WIN_HEIGHT = 750;
+unsigned int WIN_WIDTH = 1920;
+unsigned int WIN_HEIGHT = 1080;
 const float FPS = 62.0f;
 
 #ifdef SDL2_LIB
@@ -69,7 +69,7 @@ int main(int argc, char* args[]) {
     SDL_Window* win = SDL_CreateWindow(win_title.data(),
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WIN_WIDTH, WIN_HEIGHT,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+        SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
 
     if (win == NULL) {
         std::cout << "Failed to create SDL2 window" << std::endl;
@@ -86,7 +86,7 @@ int main(int argc, char* args[]) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-
+    stbi_set_flip_vertically_on_load(false);
     Firework_Viewer camera;
 #else
     // 初始化
@@ -118,10 +118,10 @@ int main(int argc, char* args[]) {
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
     // 天空盒
     skybox sky(&camera);
-    // 地面
-    Background background(50, 50, -1.0f, &camera);
     // 
     environment env(&camera);
+    // 地面
+    Background background(50, 50, -1.0f, &camera);
     Firebox firebox(-1.0f, &camera);
     firebox_ptr = &firebox;
     //bloom
@@ -131,6 +131,7 @@ int main(int argc, char* args[]) {
 #ifdef SDL2_LIB
     // 音频播放器
     std::shared_ptr<Sound_Player> sound_player = std::make_shared<Sound_Player>();
+    sound_player->StartSound();
     // 创建烟花
     Pipe_Firework_Manager fw_manager(emitter_render, sound_player);
 #else
@@ -190,7 +191,7 @@ int main(int argc, char* args[]) {
                         2,
                         10,
                         camera.Position + 15.0f * glm::vec3(camera.Front.x, 0, camera.Front.z),
-                        glm::vec3(1, 2, 0),
+                        glm::vec3(0, 2, 0),
                         glm::vec4(glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), glm::linearRand(0.001f, 1.0f), 1.0f),
                         3000 + glm::linearRand(0, 1) * 500
                     );
@@ -350,7 +351,7 @@ int main(int argc, char* args[]) {
         bloom_worker.draw_world();//画世界------------------------------
         sky.draw();
         
-        background.draw(emitter_render->GetPointLight());
+        // background.draw(emitter_render->GetPointLight());
         env.draw(emitter_render->GetPointLight());
         firebox_ptr->draw(emitter_render->GetPointLight());
         emitter_render->Render();

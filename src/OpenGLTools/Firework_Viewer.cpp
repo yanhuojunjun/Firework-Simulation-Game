@@ -28,12 +28,13 @@ void Firework_Viewer::FlushFrameTime() {
     float velocity(MovementSpeed * Time_Pass_By / 1000);
 
     for (int i = 0;i < 4;i++) {
-        Position += velocity * direct[i];
+        if (is_view_mode) Position += velocity * direct[i];
+        else Position += 2.0f * velocity * direct[i];
     }
     // 跳跃 下落
     if (is_view_mode) {
         if (jumping) {
-            direct[4].y -= velocity * 2.0; // 重力加速度为0.01
+            direct[4].y -= velocity * 1.5; // 重力加速度为0.01
             Position.y += velocity * direct[4].y;
         }
     }

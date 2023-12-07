@@ -123,7 +123,6 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
         aiString str;
         mat->GetTexture(type, i, &str);
-        std::cout << str.C_Str() << std::endl;
         // check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
         bool skip = false;
         for (unsigned int j = 0; j < textures_loaded.size(); j++) {
@@ -153,7 +152,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
     glGenTextures(1, &textureID);
 
     int width, height, nrComponents;
-    // stbi_set_flip_vertically_on_load(true);
+    
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
     if (data) {
         GLenum format;
