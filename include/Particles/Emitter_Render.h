@@ -22,7 +22,7 @@ public:
     void AddPointLight(glm::vec3 _pos, glm::vec3 _col); // 添加点光源
     const std::vector<float>& GetPointLight(); // 返回点光源
     void ClearPointLight(); // 清空点光源
-    void Update_and_Collect(uint64_t millisecond_passby); //更新所有粒子的信息，自动删除死亡的粒子群，收集所有粒子的信息
+    void Update_and_Collect(uint64_t millisecond_passby); //自动删除死亡的粒子群，收集所有粒子的信息
     void Render(); //渲染粒子
     ~Emitter_Render(); //删除shader，vao，vbo
 protected:
