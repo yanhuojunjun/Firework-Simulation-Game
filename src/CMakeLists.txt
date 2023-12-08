@@ -3,11 +3,9 @@ add_library(glad STATIC glad.c)
 
 add_library(stb_image STATIC stb_image.cpp)
 
-add_subdirectory(OpenGLTools)
+add_subdirectory(World)
 
 add_subdirectory(Particles)
-
-add_subdirectory(Sound)
 
 add_subdirectory(Fireworks)
 
