@@ -3,7 +3,6 @@
 bloom::bloom(bool _bloom, float _exposure, int width, int height)
    :screen_shader("Shaders/screen.vs", "Shaders/screen.fs"),
     gauss_shader("Shaders/gauss.vs", "Shaders/gauss.fs"),
-    draw_light_shader("Shaders/screen.vs", "Shaders/draw_light.fs"),
     world_attachment({GL_COLOR_ATTACHMENT0}),
     firework_attachment({GL_COLOR_ATTACHMENT1}){
 
@@ -97,15 +96,6 @@ void bloom::draw_firework(){
     glDrawBuffers(1, firework_attachment); //选择一个颜色附件
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    draw_light_shader.use();  
-    glBindVertexArray(quadVAO);
-    //传入世界
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
-    screen_shader.setInt("scene", 0);
-
-    glDrawArrays(GL_TRIANGLES, 0, 6);  
 }
 
 
@@ -172,5 +162,4 @@ bloom::~bloom(){
     glDeleteBuffers(1, &quadVBO);
     screen_shader.deleteShader();
     gauss_shader.deleteShader();
-    draw_light_shader.deleteShader();
 }

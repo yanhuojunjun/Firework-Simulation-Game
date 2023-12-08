@@ -28,7 +28,7 @@ public:
     unsigned int firework_attachment[1]; //绑定另一个颜色附件
     unsigned int pingpongFBO[2];//帧缓冲
     unsigned int pingpongColorbuffers[2];//两个颜色附件
-    Shader screen_shader, gauss_shader, draw_light_shader; //着色器
+    Shader screen_shader, gauss_shader; //着色器
     unsigned int quadVAO, quadVBO;
     bool use_bloom; // 选择是否爆炸
     float exposure; // 曝光度
