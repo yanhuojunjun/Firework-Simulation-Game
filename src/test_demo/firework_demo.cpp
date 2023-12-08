@@ -8,7 +8,7 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include "SkyBox.hpp"
-#include "Background.hpp"
+//#include "Background.hpp"
 #include "FireBox.hpp"
 #include "Shader.h"
 #include "bloom.h"
@@ -121,7 +121,7 @@ int main(int argc, char* args[]) {
     // 
     environment env(&camera);
     // 地面
-    Background background(50, 50, -1.0f, &camera);
+    //Background background(50, 50, -1.0f, &camera);
     Firebox firebox(-1.0f, &camera);
     firebox_ptr = &firebox;
     //bloom

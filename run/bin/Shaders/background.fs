@@ -67,7 +67,7 @@ in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
 
-#define MAX_LEN 20
+#define MAX_LEN 100
 
 uniform vec3 viewPos;
 uniform DirLight dirLight;
@@ -100,7 +100,8 @@ void main()
     // result += CalcPointLight(pointLights[0], norm, FragPos, viewDir);
     // result += CalcPointLight(pointLights[1], norm, FragPos, viewDir);
     // result += CalcPointLight(pointLights[2], norm, FragPos, viewDir);
-    for(int i = 0; i < max_len; i++)
+    int point_num = max_len < MAX_LEN ? max_len : MAX_LEN;
+    for(int i = 0; i < point_num; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir); 
 
     // phase 3: spot light

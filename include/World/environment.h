@@ -78,12 +78,12 @@ class environment{
     void draw(const std::vector<float> light) {
         model_shader.use();
         int max_len = 0;
-        if (light.size() / 6 < 1000) {
+        if (light.size() / 6 < 100) {
             max_len = light.size() / 6;
             model_shader.setInt("max_len", max_len);
         }
         else {
-            max_len = 1000;
+            max_len = 100;
             model_shader.setInt("max_len", max_len);
         }
         model_shader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
