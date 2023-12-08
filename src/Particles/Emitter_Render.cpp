@@ -66,7 +66,6 @@ void Emitter_Render::Update_and_Collect(uint64_t millisecond_passby) {
         }
 
     }
-    //std::cout << "render -> vbo_buffer: " << vbo_buffer.size() << std::endl;
 }
 
 void Emitter_Render::Render() {
