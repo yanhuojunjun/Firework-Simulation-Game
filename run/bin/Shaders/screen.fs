@@ -15,7 +15,8 @@ void main()
     vec3 hdrColor = texture(scene, TexCoords).rgb;      
     vec3 bloomColor = texture(bloomBlur, TexCoords).rgb;
     if(bloom)
-        result=hdrColor+bloomColor;
+        result= hdrColor+bloomColor;
+    else result= hdrColor;
     // tone mapping
     //result = vec3(1.0) - exp(-result * exposure);
     // also gamma correct while we're at it       

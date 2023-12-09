@@ -118,7 +118,7 @@ int main(int argc, char* args[]) {
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
     // 天空盒
     skybox sky(&camera);
-    // 
+    // 模型
     environment env(&camera);
     // 地面
     //Background background(50, 50, -1.0f, &camera);
