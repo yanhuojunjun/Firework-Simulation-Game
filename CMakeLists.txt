@@ -5,14 +5,14 @@ project(opengl)
 
 # 定义路径
 get_filename_component(PROJECT_DIR ${CMAKE_CURRENT_LIST_FILE} DIRECTORY)
-set(INCLUDE_DIR ${PROJECT_DIR}/include)
-set(RUN_DIR ${PROJECT_DIR}/run)
+set(INCLUDE_DIR ${PROJECT_DIR}/code/include)
+set(RUN_DIR ${PROJECT_DIR}/release)
 # 源文件路径
-set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src)
+set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/code/src)
 # 可执行文件输出位置
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${RUN_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${RUN_DIR})
 # 动态库输出位置
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${RUN_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${RUN_DIR})
 # 静态库输出位置
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${RUN_DIR}/lib)
 
@@ -54,4 +54,4 @@ link_directories(${RUN_DIR}/lib
                  ${RUN_DIR}/Lib_Lib/stb_image
                  ${RUN_DIR}/Lib_Lib/assimp_lib)
 
-add_subdirectory(src)
+add_subdirectory(${PROJECT_SOURCE_DIR})

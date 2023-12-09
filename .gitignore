@@ -1,5 +1,5 @@
 build/*
 !build/make_build.bat
-run/bin/*.exe
-run/lib/*.a
+release/*.exe
+release/lib/*.a
 .vscode
