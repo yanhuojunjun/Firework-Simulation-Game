@@ -1,24 +1,29 @@
-# SYSU-2021级CG-11组大作业
+# Fireworks Simulator Game
 
-## 项目结构
 
-- build: 构建目录
-- code: 源代码目录
-    - include: 头文件
-    - src: 源文件
-- release: 可执行文件以及必需的资源文件
-    - img: 纹理资源
-    - Lib_Lib: 第三方库文件
-    - lib: 项目静态库输出目录
-    - Object: 模型资源
-    - Shaders: 着色器源码
-    - sound: 音频资源
+## File structure
 
-## 项目编译方式
+- build: Build directory
+- code: Source code directory
+    - include: Header files
+    - src: Source files
+- release: Executable files and necessary resource files
+    - img: Texture resources
+    - Lib_Lib: Third-party library files
+    - lib: Project static library output directory
+    - Object: Model resources
+    - Shaders: Shader source code
+    - sound: Audio resources
 
-进入 build 文件夹运行 make_build.bat 脚本即可编译程序, 生成的可执行文件在 release 目录下.
+## Compilation method
+
+To compile the program, navigate to the build folder and run the make_build.bat script. The generated executable files will be located in the release directory.
 
 ```
 cd build
 ./make_build.bat
 ```
+
+![屏幕截图 2023-12-09 204126](https://github.com/yanhuojunjun/Firework-Simulator-Game/assets/149027679/066af5b8-2630-468f-923d-a0bc0a9a3200)
+
+![image-20231209190458384](https://github.com/yanhuojunjun/Firework-Simulator-Game/assets/149027679/3fd90e87-76df-457f-92dd-f83341bebf5c)
