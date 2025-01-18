@@ -1,6 +1,9 @@
 # Fireworks Simulator Game
 
 ## Introduction
+* Instead of relying on the existing particle system, we developed a self-designed particle system using OpenGL and C++, featuring dynamic particle transformations and physics-based behaviors to simulate realistic fireworks effects.
+* We built a Fireworks Simulator Game based on the self-designed particle system, allowing players to freely place and ignite
+various types of fireworks within the game environment.
 
 ## File Structure
 
